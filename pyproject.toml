@@ -11,7 +11,6 @@ dependencies = [
     "numpy>=2.2",
     "pyyaml>=6.0",
     "tqdm>=4.67",
-    "tensorboard>=2.19",
     "kaggle>=2.0.0",
     "python-dotenv>=1.2.1",
     "matplotlib>=3.10.8",
