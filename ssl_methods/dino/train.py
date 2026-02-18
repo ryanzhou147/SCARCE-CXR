@@ -133,11 +133,11 @@ def train_dino(config: dict) -> None:
 
         epoch_pbar.set_postfix(loss=f"{avg_loss:.6f}", lr=f"{lr:.2e}")
         wandb.log({
-            "loss/train": avg_loss,
+            "loss/epoch": avg_loss,
             "lr": lr,
             "teacher_momentum": epoch_momentum,
             "grad_norm": avg_grad_norm,
-        }, step=epoch)
+        }, step=global_step)
 
         checkpoint_data = {
             "epoch": epoch,

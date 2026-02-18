@@ -107,7 +107,7 @@ def train_moco(config: dict) -> None:
         lr = optimizer.param_groups[0]["lr"]
 
         epoch_pbar.set_postfix(loss=f"{avg_loss:.6f}", lr=f"{lr:.2e}")
-        wandb.log({"loss/train": avg_loss, "lr": lr}, step=epoch)
+        wandb.log({"loss/epoch": avg_loss, "lr": lr}, step=global_step)
 
         checkpoint_data = {
             "epoch": epoch,
