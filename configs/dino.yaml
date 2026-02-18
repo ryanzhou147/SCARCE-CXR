@@ -7,7 +7,7 @@ dino:
 
   # Multi-crop strategy
   n_global_crops: 2            # Large crops — fed to both student and teacher
-  n_local_crops: 6             # Small crops — fed to student only
+  n_local_crops: 4             # Small crops — fed to student only
   local_crop_size: 96          # Resolution of local crops (px)
   global_crop_scale: [0.4, 1.0]
   local_crop_scale: [0.1, 0.4]
@@ -22,7 +22,8 @@ dino:
   teacher_momentum_end: 1.0
 
 training:
-  batch_size: 64               # ViT needs less batch memory than ResNet
+  run_name: dino-vit_b_16
+  batch_size: 16               # ViT-B/16 with multi-crop is memory intensive
   lr: 5.0e-4
   weight_decay: 4.0e-2         # AdamW weight decay
   epochs: 100
