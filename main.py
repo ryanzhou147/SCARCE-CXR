@@ -1,8 +1,11 @@
 """CMVR — CLI entry point for SSL pretraining and downstream tasks."""
 
 import argparse
+import multiprocessing
 
 import yaml
+
+multiprocessing.set_start_method("fork", force=True)
 
 
 def load_config(config_path: str, overrides: dict) -> dict:
