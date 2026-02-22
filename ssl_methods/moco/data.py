@@ -73,7 +73,7 @@ def build_moco_dataloader(config: dict) -> DataLoader:
         batch_size=config["training"]["batch_size"],
         shuffle=True,
         num_workers=nw,
-        pin_memory=True,
+        pin_memory=False,  # cache_in_ram already eliminates I/O bottleneck; pin_memory causes issues with Python 3.14
         drop_last=True,
         persistent_workers=(nw > 0),
         prefetch_factor=(4 if nw > 0 else None),
