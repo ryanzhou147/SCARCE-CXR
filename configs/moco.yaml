@@ -11,8 +11,8 @@ moco:
 
 training:
   run_name: moco-resnet50-v3-vicreg
-  batch_size: 1024         # L4 24GB: encoder_k is no_grad so only one activation graph
-  lr: 1.2e-1               # SGD learning rate (scaled by batch size: 0.03 * bs/256)
+  batch_size: 512          # L4 22GB usable: 1024 OOMs due to encoder_q activation graph
+  lr: 6.0e-2               # SGD learning rate (scaled by batch size: 0.03 * bs/256)
   weight_decay: 1.0e-4
   epochs: 800              # More passes compensates for small dataset size
   warmup_epochs: 10
