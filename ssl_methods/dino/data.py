@@ -17,6 +17,16 @@ from torchvision import transforms
 from data import collect_image_paths, _load_gray256
 
 
+class GaussianNoise:
+    """Add zero-mean Gaussian noise to a float tensor. Simulates X-ray quantum noise."""
+
+    def __init__(self, std: float):
+        self.std = std
+
+    def __call__(self, x: torch.Tensor) -> torch.Tensor:
+        return x + torch.randn_like(x) * self.std
+
+
 class MultiCropTransform:
     """Applies two augmentation pipelines to yield multiple views per image.
 
@@ -94,17 +104,16 @@ def get_dino_transforms(config: dict) -> tuple[transforms.Compose, transforms.Co
             transforms.ColorJitter(
                 brightness=aug["color_jitter_brightness"],
                 contrast=aug["color_jitter_contrast"],
-                saturation=aug["color_jitter_saturation"],
-                hue=aug["color_jitter_hue"],
             )
         ], p=aug["color_jitter_prob"]),
-        transforms.RandomGrayscale(p=aug["grayscale_prob"]),
         transforms.RandomApply([
             transforms.GaussianBlur(kernel_size=aug["gaussian_blur_kernel"]),
         ], p=aug["gaussian_blur_prob"]),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ]
+    if noise_std := aug.get("gaussian_noise_std", 0.0):
+        shared.append(GaussianNoise(noise_std))
 
     global_transform = transforms.Compose([
         transforms.RandomResizedCrop(global_size, scale=global_scale),
