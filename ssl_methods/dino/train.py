@@ -64,6 +64,18 @@ def train_dino(config: dict) -> None:
         total_steps,
     )
 
+    # Teacher temperature warmup: linearly decay from warmup_start → teacher_temp
+    # over the first teacher_temp_warmup_epochs epochs, then hold.
+    teacher_temp_final = dino_cfg["teacher_temp"]
+    teacher_temp_start = dino_cfg.get("teacher_temp_warmup_start", teacher_temp_final)
+    teacher_temp_warmup_epochs = dino_cfg.get("teacher_temp_warmup_epochs", 0)
+
+    def get_teacher_temp(epoch: int) -> float:
+        if teacher_temp_warmup_epochs <= 0 or epoch >= teacher_temp_warmup_epochs:
+            return teacher_temp_final
+        frac = epoch / teacher_temp_warmup_epochs
+        return teacher_temp_start + frac * (teacher_temp_final - teacher_temp_start)
+
     scaler = GradScaler(device.type, enabled=(device.type == "cuda"))
 
     start_epoch = 0
@@ -95,6 +107,7 @@ def train_dino(config: dict) -> None:
 
     epoch_pbar = tqdm(range(start_epoch, total_epochs), desc="Pretraining", unit="epoch")
     for epoch in epoch_pbar:
+        criterion.teacher_temp = get_teacher_temp(epoch)
         model.train()
         total_loss = 0.0
         total_grad_norm = 0.0
@@ -131,11 +144,12 @@ def train_dino(config: dict) -> None:
         epoch_start_step = epoch * len(dataloader)
         epoch_momentum = float(momentum_schedule[min(epoch_start_step, total_steps - 1)])
 
-        epoch_pbar.set_postfix(loss=f"{avg_loss:.6f}", lr=f"{lr:.2e}")
+        epoch_pbar.set_postfix(loss=f"{avg_loss:.6f}", lr=f"{lr:.2e}", t_temp=f"{criterion.teacher_temp:.4f}")
         wandb.log({
             "loss/epoch": avg_loss,
             "lr": lr,
             "teacher_momentum": epoch_momentum,
+            "teacher_temp": criterion.teacher_temp,
             "grad_norm": avg_grad_norm,
         }, step=global_step)
 
