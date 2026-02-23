@@ -2,28 +2,33 @@
 # Reference: Caron et al. 2021 "Emerging Properties in Self-Supervised Vision Transformers"
 
 dino:
-  encoder: vit_b_16            # Backbone: vit_b_16, vit_b_32, resnet50, resnet18
-  out_dim: 65536               # DINO head prototype dimension (number of "visual words")
+  encoder: resnet50            # Backbone: vit_b_16, vit_b_32, resnet50, resnet18
+  out_dim: 256                 # Prototypes = bottleneck_dim: cosine sims are meaningful at batch_size=64
+                               # (2048 was causing centering collapse — teacher too diffuse to learn from)
 
-  # Multi-crop strategy
+  # Multi-crop strategy — local crops removed for small-dataset stability
+  # (96-px crops of chest X-rays are mostly noise; just 2 global views is sufficient)
   n_global_crops: 2            # Large crops — fed to both student and teacher
-  n_local_crops: 4             # Small crops — fed to student only
-  local_crop_size: 96          # Resolution of local crops (px)
+  n_local_crops: 0             # Disabled: local crops add noise on 11k-image local runs
+  local_crop_size: 96          # Unused when n_local_crops=0
   global_crop_scale: [0.4, 1.0]
   local_crop_scale: [0.1, 0.4]
 
   # Loss temperatures
   student_temp: 0.1            # Higher = softer student distribution
-  teacher_temp: 0.04           # Lower = sharper teacher distribution (more confident)
-  center_momentum: 0.9         # EMA coefficient for the centering buffer
+  teacher_temp: 0.04           # Lower = sharper teacher distribution (target after warmup)
+  teacher_temp_warmup_start: 0.07   # Teacher temp at epoch 0 (prevents early collapse)
+  teacher_temp_warmup_epochs: 30    # Linearly decay from warmup_start → teacher_temp
+  center_momentum: 0.99        # Slow centering: adapts over ~100 steps instead of 10
+                               # (0.9 was too fast — instantly cancelled teacher signal)
 
   # Teacher EMA momentum schedule (cosine from start → end over all steps)
-  teacher_momentum_start: 0.996
+  teacher_momentum_start: 0.99   # Faster initial teacher learning (was 0.996)
   teacher_momentum_end: 1.0
 
 training:
-  run_name: dino-vit_b_16
-  batch_size: 16               # ViT-B/16 with multi-crop is memory intensive
+  run_name: dino-resnet50
+  batch_size: 64               # ResNet is lighter than ViT; increase if no OOM
   lr: 5.0e-4
   weight_decay: 4.0e-2         # AdamW weight decay
   epochs: 100
@@ -45,12 +50,10 @@ data:
     #   root_dir: /data/mimic-cxr
 
 augmentations:
-  rotation_degrees: 10        # ±10° — models realistic patient positioning variation
+  rotation_degrees: 10             # ±10° — models realistic patient positioning variation
   color_jitter_prob: 0.8
-  color_jitter_brightness: 0.4
-  color_jitter_contrast: 0.4
-  color_jitter_saturation: 0.1  # low: grayscale images have no meaningful saturation
-  color_jitter_hue: 0.0         # zero: hue has no meaning in grayscale X-rays
-  grayscale_prob: 0.2
+  color_jitter_brightness: 0.8    # was 0.4 — simulates exposure/kVp variation
+  color_jitter_contrast: 0.8      # was 0.4 — simulates window/level variation
   gaussian_blur_prob: 0.5
   gaussian_blur_kernel: 23
+  gaussian_noise_std: 0.1         # simulates X-ray quantum (Poisson) noise
