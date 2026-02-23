@@ -60,6 +60,24 @@ def cmd_pretrain_dino(args: argparse.Namespace, remaining: list[str]) -> None:
     train_dino(config)
 
 
+def cmd_pretrain_spark(args: argparse.Namespace, remaining: list[str]) -> None:
+    """Run SparK pretraining."""
+    from ssl_methods.spark import train_spark
+
+    overrides = parse_overrides(remaining)
+    config = load_config(args.config, overrides)
+    train_spark(config)
+
+
+def cmd_pretrain_barlow(args: argparse.Namespace, remaining: list[str]) -> None:
+    """Run BarlowTwins pretraining."""
+    from ssl_methods.barlow import train_barlow
+
+    overrides = parse_overrides(remaining)
+    config = load_config(args.config, overrides)
+    train_barlow(config)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(prog="cmvr", description="CMVR: Chest X-ray SSL Pretraining")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -72,12 +90,24 @@ def main() -> None:
     p_dino = subparsers.add_parser("pretrain-dino", help="Run DINO self-supervised pretraining")
     p_dino.add_argument("--config", type=str, default="configs/dino.yaml", help="Path to config YAML")
 
+    # pretrain-spark
+    p_spark = subparsers.add_parser("pretrain-spark", help="Run SparK self-supervised pretraining")
+    p_spark.add_argument("--config", type=str, default="configs/spark.yaml", help="Path to config YAML")
+
+    # pretrain-barlow
+    p_barlow = subparsers.add_parser("pretrain-barlow", help="Run BarlowTwins self-supervised pretraining")
+    p_barlow.add_argument("--config", type=str, default="configs/barlow.yaml", help="Path to config YAML")
+
     args, remaining = parser.parse_known_args()
 
     if args.command == "pretrain-moco":
         cmd_pretrain_moco(args, remaining)
     elif args.command == "pretrain-dino":
         cmd_pretrain_dino(args, remaining)
+    elif args.command == "pretrain-spark":
+        cmd_pretrain_spark(args, remaining)
+    elif args.command == "pretrain-barlow":
+        cmd_pretrain_barlow(args, remaining)
 
 
 if __name__ == "__main__":
