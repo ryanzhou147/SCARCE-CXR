@@ -1,0 +1,38 @@
+# BarlowTwins Configuration
+# Reference: Zbontar et al. 2021 "Barlow Twins: Self-Supervised Learning via Redundancy Reduction"
+
+barlow:
+  encoder: resnet50
+  proj_dim: 512                # Local: smaller = less noise per batch (2048 for cloud with bs=512+)
+  proj_hidden_dim: 2048        # Projector hidden width
+  lambda_coeff: 0.005          # Off-diagonal weight — 0.005 from paper, lower = more invariance
+
+training:
+  run_name: barlow-resnet50
+  batch_size: 64               # RTX 3060 12GB limit: two simultaneous ResNet50 graphs ≈ 5.5GB at bs=64
+  lr: 3.0e-4
+  weight_decay: 1.0e-4
+  epochs: 100
+  warmup_epochs: 10
+  grad_clip: 3.0
+  checkpoint_every: 10
+  output_dir: outputs/barlow
+
+data:
+  image_size: 224
+  num_workers: 5
+  cache_in_ram: true
+  datasets:
+    - name: nih
+      root_dir: datasets/nih-chest-xrays
+      txt_file: datasets/nih-chest-xrays/test.txt   # test split (~11k) for local runs
+
+augmentations:
+  random_crop_scale: [0.08, 1.0]
+  rotation_degrees: 10
+  color_jitter_prob: 0.8
+  color_jitter_brightness: 0.8
+  color_jitter_contrast: 0.8
+  gaussian_blur_prob: 0.5
+  gaussian_blur_kernel: 23
+  gaussian_noise_std: 0.1      # simulates X-ray quantum (Poisson) noise
