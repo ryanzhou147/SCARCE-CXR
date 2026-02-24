@@ -20,15 +20,18 @@ import numpy as np
 from PIL import Image
 
 DEFAULT_LABELS = [
-    "normal",
-    "copd signs",
-    "scoliosis",
-    "cardiomegaly",
-    "air trapping",
-    "aortic elongation",
-    "pleural effusion",
-    "nodule",
-    "laminar atelectasis",
+    "bronchiectasis",
+    "calcified granuloma",
+    "callus rib fracture",
+    "hiatal hernia",
+    "interstitial pattern",
+    "hemidiaphragm elevation",
+    "fibrotic band",
+    "pulmonary fibrosis",
+    "pulmonary mass",
+    "reticular interstitial pattern",
+    "pneumothorax",
+    "tuberculosis",
 ]
 
 
@@ -93,8 +96,9 @@ def plot_grid(
         for col_idx in range(n_cols):
             ax = axes[row_idx][col_idx]
             if col_idx < len(paths):
-                img = np.array(Image.open(paths[col_idx]).convert("L"))
-                ax.imshow(img, cmap="gray", aspect="auto")
+                img = np.array(Image.open(paths[col_idx])).astype(np.float32)
+                img = (img - img.min()) / (img.max() - img.min() + 1e-8)
+                ax.imshow(img, cmap="gray", vmin=0, vmax=1, aspect="auto")
             else:
                 ax.text(0.5, 0.5, "not found", ha="center", va="center",
                         transform=ax.transAxes, color="gray")
