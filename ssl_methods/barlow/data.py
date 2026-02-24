@@ -73,7 +73,7 @@ def build_barlow_dataloader(config: dict) -> DataLoader:
         batch_size=config["training"]["batch_size"],
         shuffle=True,
         num_workers=nw,
-        pin_memory=True,
+        pin_memory=False,  # Python 3.14 pin_memory bug
         drop_last=True,
         persistent_workers=(nw > 0),
         prefetch_factor=(4 if nw > 0 else None),

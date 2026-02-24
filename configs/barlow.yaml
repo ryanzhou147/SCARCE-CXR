@@ -9,8 +9,8 @@ barlow:
 
 training:
   run_name: barlow-resnet50-cloud
-  batch_size: 256              # L4 22GB: 2048-dim projector (2048→2048→2048) is memory-heavy
-  lr: 1.2e-3                   # Linear scale from local: 3e-4 × (256/64) = 1.2e-3
+  batch_size: 512              # L4 22GB: pin_memory=False fixes Python 3.14 OOM
+  lr: 2.4e-3                   # Linear scale from local: 3e-4 × (512/64) = 2.4e-3
   weight_decay: 1.0e-4
   epochs: 300
   warmup_epochs: 10
