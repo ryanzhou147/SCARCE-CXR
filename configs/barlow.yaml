@@ -9,8 +9,8 @@ barlow:
 
 training:
   run_name: barlow-resnet50-cloud
-  batch_size: 384              # L4 22GB: proj_dim=2048 projector is memory-heavy, 512 OOMs
-  lr: 1.8e-3                   # Linear scale from local: 3e-4 × (384/64) = 1.8e-3
+  batch_size: 256              # L4 22GB: 2048-dim projector (2048→2048→2048) is memory-heavy
+  lr: 1.2e-3                   # Linear scale from local: 3e-4 × (256/64) = 1.2e-3
   weight_decay: 1.0e-4
   epochs: 300
   warmup_epochs: 10
