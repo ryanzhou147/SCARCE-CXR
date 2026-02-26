@@ -76,5 +76,5 @@ def build_barlow_dataloader(config: dict) -> DataLoader:
         pin_memory=False,  # Python 3.14 pin_memory bug
         drop_last=True,
         persistent_workers=(nw > 0),
-        prefetch_factor=(4 if nw > 0 else None),
+        prefetch_factor=(2 if nw > 0 else None),  # cache_in_ram=True: no I/O bottleneck, keep shm low
     )
