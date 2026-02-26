@@ -28,6 +28,7 @@ via global average pool → 2048-d vector, identical to MoCo/DINO/BarlowTwins.
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import torch.utils.checkpoint as ckpt
 from torchvision import models
 
 
@@ -227,12 +228,13 @@ class SparK(nn.Module):
         """
         masked, mask_px = self._random_mask(x)
 
-        # Encode
+        # Encode — checkpoint each stage to avoid storing all skip-connection
+        # feature maps simultaneously (f1+f2+f3+f4 would exceed L4 22GB)
         h = self.stem(masked)
-        f1 = self.layer1(h)
-        f2 = self.layer2(f1)
-        f3 = self.layer3(f2)
-        f4 = self.layer4(f3)
+        f1 = ckpt.checkpoint(self.layer1, h,  use_reentrant=False)
+        f2 = ckpt.checkpoint(self.layer2, f1, use_reentrant=False)
+        f3 = ckpt.checkpoint(self.layer3, f2, use_reentrant=False)
+        f4 = ckpt.checkpoint(self.layer4, f3, use_reentrant=False)
 
         # Decode
         pred = self.decoder(f1, f2, f3, f4)  # (B, 3, H, W)
