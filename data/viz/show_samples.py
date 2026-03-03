@@ -1,7 +1,6 @@
-"""Display a 5x5 grid of sample chest X-rays from the dataset.
-
-Usage:
-  uv run python scripts/show_samples.py [--data-dir datasets/nih-chest-xrays] [--split train]
+"""
+Display grid of sample chest X-rays from the dataset.
+uv run python -m data.viz.show_samples --data-dir datasets/nih-chest-xrays
 """
 
 import argparse
@@ -12,7 +11,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 
 DEFAULT_DATA_DIR = "datasets/nih-chest-xrays"
-GRID = 25
+GRID = 5
 TOTAL = GRID * GRID
 
 
@@ -29,54 +28,24 @@ def reservoir_sample(iterator, k: int, rng: random.Random) -> list:
     return result
 
 
-def sample_images(data_dir: Path, split: str | None, n: int, rng: random.Random) -> list[Path]:
-    """Sample n image paths without loading the full list into memory."""
-    if split:
-        split_file = data_dir / f"{split}.txt"
-        if split_file.exists():
-            filenames = split_file.read_text().strip().splitlines()
-            # Sample filenames first (cheap strings), then resolve paths
-            chosen = rng.sample(filenames, min(n, len(filenames)))
-            subdirs = sorted(data_dir.glob("images*")) or [data_dir]
-            name_to_path: dict[str, Path] = {}
-            for subdir in subdirs:
-                for p in subdir.glob("*.png"):
-                    if p.name in chosen:
-                        name_to_path[p.name] = p
-                    if len(name_to_path) == len(chosen):
-                        break
-                if len(name_to_path) == len(chosen):
-                    break
-            return [name_to_path[f] for f in chosen if f in name_to_path]
-
-    return reservoir_sample(data_dir.glob("**/*.png"), n, rng)
-
-
 def main():
     parser = argparse.ArgumentParser(description="Show sample chest X-ray grid")
     parser.add_argument("--data-dir", type=str, default=DEFAULT_DATA_DIR)
-    parser.add_argument("--split", type=str, default=None, help="train/val/test split")
-    parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
 
     data_dir = Path(args.data_dir)
-    rng = random.Random(args.seed)
-    sample = sample_images(data_dir, args.split, TOTAL, rng)
+    rng = random.Random(42)
+    sample = reservoir_sample(data_dir.glob("**/*.png"), TOTAL, rng)
     print(f"Showing {len(sample)} images")
 
-    thumb_size = (128, 128)
-
     fig, axes = plt.subplots(GRID, GRID, figsize=(10, 10))
-    fig.suptitle(
-        f"Sample Chest X-rays ({args.split or 'all'}) — {len(sample)} images",
-        fontsize=20,
-    )
+    fig.suptitle(f"Sample Chest X-rays — {len(sample)} images", fontsize=20)
 
     for i, ax in enumerate(axes.flat):
         ax.axis("off")
         if i < len(sample):
             img = Image.open(sample[i])
-            img.thumbnail(thumb_size)
+            img.thumbnail((128, 128))
             ax.imshow(img, cmap="gray")
 
     plt.tight_layout()

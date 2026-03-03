@@ -61,7 +61,7 @@ def _resize_dir(root: Path, target: int, dry_run: bool, workers: int) -> None:
     print(f"  Done: {ok} resized, {skip} already {target}px, {errors} errors")
 
 
-def main() -> None:
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--dir", required=True, help="PadChest directory to resize")
     parser.add_argument("--size", type=int, default=_DEFAULT_SIZE)
@@ -75,6 +75,3 @@ def main() -> None:
 
     _resize_dir(Path(args.dir), args.size, args.dry_run, args.workers)
 
-
-if __name__ == "__main__":
-    main()
