@@ -3,6 +3,7 @@ datasets/
 
 # Training outputs
 outputs/
+outputs_cloud/
 
 # Python
 __pycache__/

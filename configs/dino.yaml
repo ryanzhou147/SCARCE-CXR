@@ -9,7 +9,7 @@ dino:
   # Multi-crop strategy — local crops removed for small-dataset stability
   # (96-px crops of chest X-rays are mostly noise; just 2 global views is sufficient)
   n_global_crops: 2            # Large crops — fed to both student and teacher
-  n_local_crops: 0             # Disabled: local crops add noise on 11k-image local runs
+  n_local_crops: 0             # Disabled: local crops add noise on small-dataset runs
   local_crop_size: 96          # Unused when n_local_crops=0
   global_crop_scale: [0.4, 1.0]
   local_crop_scale: [0.1, 0.4]
@@ -43,7 +43,7 @@ data:
   datasets:
     - name: nih
       root_dir: datasets/nih-chest-xrays
-      txt_file: datasets/nih-chest-xrays/test.txt   # use only the test split (11 212 images)
+      # txt_file omitted — use all 112k images for pretraining
     # - name: chexpert
     #   root_dir: /data/chexpert
     # - name: mimic-cxr
