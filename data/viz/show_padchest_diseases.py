@@ -1,12 +1,7 @@
-"""Show example chest X-rays for specified PadChest disease labels.
-
-Finds N examples of each requested label and displays them in a grid.
-Each row = one disease, each column = one example image.
-
-Usage:
-  uv run python -m data.show_padchest_diseases
-  uv run python -m data.show_padchest_diseases --labels "copd signs" nodule scoliosis
-  uv run python -m data.show_padchest_diseases --n 3 --out padchest_examples.png
+"""
+Show example chest X-rays for specified PadChest disease labels.
+uv run python -m data.viz.show_padchest_diseases
+uv run python -m data.viz.show_padchest_diseases --labels "bronchiectasis" "calcified granuloma" "callus rib fracture" --out padchest_examples.png
 """
 
 import argparse
@@ -52,8 +47,7 @@ def find_examples(
 
     def open_csv():
         if gz_files:
-            import gzip as gz_mod
-            return gz_mod.open(gz_files[0], "rt")
+            return gzip.open(gz_files[0], "rt")
         return open(csv_files[0])
 
     with open_csv() as f:
@@ -67,7 +61,7 @@ def find_examples(
                 labels = ast.literal_eval(row["Labels"])
             except (ValueError, SyntaxError, KeyError):
                 continue
-            if len(labels) != 1:
+            if len(labels) != 1: # only show examples with exactly one label
                 continue
             label = str(labels[0]).strip().lower()
             if label in found and len(found[label]) < n:
@@ -85,7 +79,18 @@ def plot_grid(
     n_rows = len(labels)
     n_cols = n
 
-    fig, axes = plt.subplots(n_rows, n_cols, figsize=(n_cols * 2.5, n_rows * 2.8))
+    # Compute figsize so axes cells are exactly S×S inches after fixed margins.
+    S = 2.2
+    left_in, right_in, top_in, bot_in = 1.5, 0.1, 0.35, 0.05
+    figw = left_in + n_cols * S + right_in
+    figh = top_in  + n_rows * S + bot_in
+
+    fig, axes = plt.subplots(n_rows, n_cols, figsize=(figw, figh))
+    fig.subplots_adjust(
+        left=left_in/figw, right=1-right_in/figw,
+        top=1-top_in/figh,  bottom=bot_in/figh,
+        wspace=0, hspace=0,
+    )
     if n_rows == 1:
         axes = [axes]
     if n_cols == 1:
@@ -96,7 +101,7 @@ def plot_grid(
         for col_idx in range(n_cols):
             ax = axes[row_idx][col_idx]
             if col_idx < len(paths):
-                img = np.array(Image.open(paths[col_idx])).astype(np.float32)
+                img = np.array(Image.open(paths[col_idx]).resize((224, 224))).astype(np.float32)
                 img = (img - img.min()) / (img.max() - img.min() + 1e-8)
                 ax.imshow(img, cmap="gray", vmin=0, vmax=1, aspect="auto")
             else:
@@ -104,17 +109,16 @@ def plot_grid(
                         transform=ax.transAxes, color="gray")
             ax.axis("off")
             if col_idx == 0:
-                ax.set_ylabel(label, fontsize=9, rotation=0, labelpad=80,
-                              va="center", ha="right")
+                ax.text(-0.05, 0.5, label, fontsize=9, transform=ax.transAxes,
+                        va="center", ha="right")
 
-    plt.suptitle("PadChest Disease Examples", fontsize=13, fontweight="bold", y=1.01)
-    plt.tight_layout()
+    plt.suptitle("PadChest Disease Examples", fontsize=13, fontweight="bold")
     plt.savefig(out, dpi=120, bbox_inches="tight")
-    plt.close()
+    plt.show()
     print(f"Saved to {out}")
 
 
-def main() -> None:
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Show PadChest disease examples in a grid")
     parser.add_argument("--labels", nargs="+", default=DEFAULT_LABELS,
                         help="Disease labels to show")
@@ -133,6 +137,3 @@ def main() -> None:
 
     plot_grid(found, args.n, Path(args.out))
 
-
-if __name__ == "__main__":
-    main()
