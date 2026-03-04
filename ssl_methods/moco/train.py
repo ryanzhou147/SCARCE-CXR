@@ -47,7 +47,6 @@ def train_moco(config: dict) -> None:
         T=moco_cfg["temperature"],
     ).to(device)
 
-    # MoCo uses SGD with momentum
     optimizer = torch.optim.SGD(
         model.encoder_q.parameters(),
         lr=config["training"]["lr"],
