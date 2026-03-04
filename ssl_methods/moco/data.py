@@ -4,7 +4,7 @@ import torch
 from torch.utils.data import ConcatDataset, DataLoader
 from torchvision import transforms
 
-from data.dataset import UnlabeledChestXrayDataset, collect_image_paths
+from data.dataloader import UnlabeledChestXrayDataset, collect_image_paths
 
 
 class GaussianNoise:
@@ -20,10 +20,10 @@ class GaussianNoise:
 def get_moco_transforms(config: dict) -> transforms.Compose:
     """MoCo v2 augmentation pipeline for chest X-rays.
 
-    Saturation and hue jitter are omitted — they are no-ops on grayscale images
-    (all three RGB channels are identical after convert('RGB')).  RandomGrayscale
-    is likewise dropped for the same reason.  Brightness and contrast jitter are
-    kept and strengthened; Gaussian noise is added to simulate quantum noise.
+    Saturation and hue jitter are omitted. Chest X-rays are grayscale.
+    RandomGrayscale is dropped for the same reason. 
+    Brightness and contrast jitter are kept and strengthened;
+    Gaussian noise is added to simulate quantum noise.
     """
     aug = config["augmentations"]
     size = config["data"]["image_size"]
@@ -61,7 +61,7 @@ def build_moco_dataloader(config: dict) -> DataLoader:
             datasets.append(UnlabeledChestXrayDataset(paths, transform, cache_in_ram=cache_in_ram))
             print(f"  {ds_cfg['name']}: {len(paths)} images from {ds_cfg['root_dir']}")
         else:
-            print(f"  {ds_cfg['name']}: WARNING — no images found in {ds_cfg['root_dir']}")
+            print(f"  {ds_cfg['name']}: WARNING: no images found in {ds_cfg['root_dir']}")
 
     if not datasets:
         raise RuntimeError("No images found across any configured datasets.")
