@@ -55,8 +55,10 @@ def train_barlow(config: dict) -> None:
         return 0.5 * (1.0 + math.cos(math.pi * progress))
 
     scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
-    scaler = GradScaler(device.type, enabled=(device.type == "cuda"))
+    use_cuda = device.type == "cuda"
+    scaler = GradScaler(device.type, enabled=use_cuda)
 
+    grad_clip = config["training"].get("grad_clip")
     start_epoch = 0
     global_step = 0
     best_loss = float("inf")
@@ -93,22 +95,23 @@ def train_barlow(config: dict) -> None:
             view1 = view1.to(device)
             view2 = view2.to(device)
 
-            with autocast(device_type=device.type, enabled=(device.type == "cuda")):
+            with autocast(device_type=device.type, enabled=use_cuda):
                 z1, z2 = model(view1, view2)
                 loss = criterion(z1, z2)
 
             optimizer.zero_grad()
             scaler.scale(loss).backward()
-            if grad_clip := config["training"].get("grad_clip"):
+            if grad_clip:
                 scaler.unscale_(optimizer)
                 torch.nn.utils.clip_grad_norm_(model.parameters(), grad_clip)
             scaler.step(optimizer)
             scaler.update()
 
-            total_loss += loss.item()
-            wandb.log({"loss/step": loss.item()}, step=global_step)
+            loss_val = loss.item()
+            total_loss += loss_val
+            wandb.log({"loss/step": loss_val}, step=global_step)
             global_step += 1
-            batch_pbar.set_postfix(loss=f"{loss.item():.4f}")
+            batch_pbar.set_postfix(loss=f"{loss_val:.4f}")
 
         scheduler.step()
         avg_loss = total_loss / len(dataloader)
