@@ -63,8 +63,7 @@ def train_dino(config: dict) -> None:
         total_steps,
     )
 
-    # Teacher temperature warmup: linearly decay from warmup_start → teacher_temp
-    # over the first teacher_temp_warmup_epochs epochs, then hold.
+    # Linearly decay then hold.
     teacher_temp_final = dino_cfg["teacher_temp"]
     teacher_temp_start = dino_cfg.get("teacher_temp_warmup_start", teacher_temp_final)
     teacher_temp_warmup_epochs = dino_cfg.get("teacher_temp_warmup_epochs", 0)

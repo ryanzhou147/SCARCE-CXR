@@ -1,8 +1,5 @@
-"""DINOLoss: cross-entropy between teacher and student outputs with centering.
-
-Centering subtracts a running mean from the teacher logits before softmax,
-which prevents all tokens from collapsing onto the same prototype regardless
-of the input.
+"""
+DINOLoss: cross-entropy between teacher and student outputs with centering.
 """
 
 import torch
@@ -13,14 +10,14 @@ import torch.nn.functional as F
 class DINOLoss(nn.Module):
     """Cross-entropy loss with teacher centering.
 
-    For each (teacher_crop, student_crop) pair — excluding the same-view
-    pair — compute ``-sum(teacher_probs * log(student_probs))`` and average.
+    For each (teacher_crop, student_crop) pair excluding the same-view
+    pair compute ``-sum(teacher_probs * log(student_probs))`` and average.
 
     Args:
         out_dim:          Prototype dimension (must match the DINO head).
         n_global_crops:   Number of global crops produced by the teacher.
-        student_temp:     Student softmax temperature (higher → softer).
-        teacher_temp:     Teacher softmax temperature (lower → sharper).
+        student_temp:     Student softmax temperature (higher is softer).
+        teacher_temp:     Teacher softmax temperature (lower is sharper).
         center_momentum:  EMA coefficient for the centering buffer.
     """
 
@@ -44,12 +41,12 @@ class DINOLoss(nn.Module):
         student_output: list[torch.Tensor],
         teacher_output: list[torch.Tensor],
     ) -> torch.Tensor:
-        # Teacher: centre → temperature → softmax → detach (no gradients).
+        # Teacher: centre -> temperature -> softmax -> detach (no gradients).
         teacher_probs = [
             F.softmax((t - self.center) / self.teacher_temp, dim=-1).detach()
             for t in teacher_output
         ]
-        # Student: temperature → log-softmax.
+        # Student: temperature -> log-softmax.
         student_log_probs = [
             F.log_softmax(s / self.student_temp, dim=-1)
             for s in student_output

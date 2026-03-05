@@ -1,9 +1,7 @@
-"""DINO multi-crop data pipeline.
-
+"""
+DINO multi-crop data pipeline.
 Produces ``n_global`` large-crop views (used by teacher + student) and
-``n_local`` small-crop views (used by student only).  A custom collate
-function stacks each view position across the batch so the training loop
-receives a plain ``list[Tensor]``.
+``n_local`` small-crop views (used by student only).
 """
 
 from pathlib import Path
@@ -30,8 +28,8 @@ class GaussianNoise:
 class MultiCropTransform:
     """Applies two augmentation pipelines to yield multiple views per image.
 
-    The first ``n_global`` views come from ``global_transform`` (large crops).
-    The remaining ``n_local`` views come from ``local_transform`` (small crops).
+    First ``n_global`` views from ``global_transform`` (large crops).
+    Remaining ``n_local`` views from ``local_transform`` (small crops).
     """
 
     def __init__(
@@ -84,8 +82,7 @@ class MultiCropDataset(Dataset):
 
 def multicrop_collate(batch: list[list[torch.Tensor]]) -> list[torch.Tensor]:
     """Stack each view position across the batch into a ``(B, C, H, W)`` tensor."""
-    n_views = len(batch[0])
-    return [torch.stack([item[i] for item in batch]) for i in range(n_views)]
+    return [torch.stack(tensors) for tensors in zip(*batch)]
 
 
 def get_dino_transforms(config: dict) -> tuple[transforms.Compose, transforms.Compose]:
@@ -158,5 +155,6 @@ def build_dino_dataloader(config: dict) -> DataLoader:
         pin_memory=False,  # Python 3.14 pin_memory bug
         drop_last=True,
         persistent_workers=(nw > 0),
+        prefetch_factor=(2 if nw > 0 else None),
         collate_fn=multicrop_collate,
     )
