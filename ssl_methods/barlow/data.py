@@ -1,7 +1,7 @@
 """BarlowTwins data pipeline.
 
 Identical structure to MoCo: returns two independently augmented views of
-each image.  The augmentation pipeline is tuned for chest X-rays (no
+each image. The augmentation pipeline is tuned for chest X-rays (no
 saturation/hue jitter, which are no-ops on grayscale; Gaussian noise added
 to simulate X-ray quantum noise).
 """

@@ -1,8 +1,5 @@
-"""BarlowTwins model: shared backbone + 3-layer BatchNorm projector.
-
-Architecture follows Zbontar et al. 2021. BatchNorm (not LayerNorm) in the
-projector keeps projections zero-mean/unit-variance, which is required by the
-cross-correlation objective. The projector is discarded at fine-tuning time.
+"""
+BarlowTwins model: shared backbone + 3-layer BatchNorm projector.
 """
 
 import torch
@@ -27,7 +24,7 @@ def _build_backbone(encoder_name: str) -> tuple[nn.Module, int]:
 class BarlowTwins(nn.Module):
     """BarlowTwins student model.
 
-    Both views pass through the same backbone and projector; no teacher, no queue.
+    Both views pass through the same backbone and projector.
 
     Args:
         encoder_name:     torchvision backbone (e.g. "resnet50").
