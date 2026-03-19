@@ -180,10 +180,38 @@ def load_raw_backbone(
     return backbone, method
 
 
+def load_imagenet_feature_extractor(device: torch.device) -> nn.Module:
+    """Frozen ResNet50 pretrained on ImageNet1K. forward(x) -> (B, 2048)."""
+    from torchvision.models import ResNet50_Weights, resnet50
+    model = resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
+    model.fc = nn.Identity()
+    model = model.to(device)
+    model.train(False)
+    for p in model.parameters():
+        p.requires_grad_(False)
+    return model
+
+
+def load_imagenet_raw_backbone(device: torch.device) -> tuple[nn.Module, str]:
+    """ResNet50 pretrained on ImageNet1K with named stages for fine-tuning.
+
+    All parameters start frozen. Call unfreeze_for_finetuning afterwards.
+    """
+    from torchvision.models import ResNet50_Weights, resnet50
+    model = resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
+    model.fc = nn.Identity()
+    model = model.to(device)
+    model.train(False)
+    for p in model.parameters():
+        p.requires_grad_(False)
+    return model, "imagenet"
+
+
 def unfreeze_for_finetuning(backbone: nn.Module, method: str) -> list[str]:
-    # Contrastive methods: unfreeze from layer2 up. SparK (restorative) keeps
-    # layer2 frozen because the decoder already adapted those features.
-    if method in ("moco", "barlow", "dino"):
+    # Contrastive + supervised methods: unfreeze from layer2 up.
+    # SparK (restorative) keeps layer2 frozen — the U-Net decoder already
+    # adapted those features during pretraining.
+    if method in ("moco", "barlow", "dino", "imagenet"):
         unfreeze = {"layer2", "layer3", "layer4"}
     else:
         unfreeze = {"layer3", "layer4"}
