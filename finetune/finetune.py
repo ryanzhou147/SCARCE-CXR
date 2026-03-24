@@ -1,14 +1,11 @@
-"""Binary few-shot gradient fine-tuning evaluation on PadChest rare findings.
+"""Binary few-shot gradient fine-tuning on PadChest rare diseases.
 
-Partial layer unfreeze + cosine LR decay. Slower than probe; use after identifying
-the best checkpoint with probe_padchest.py.
-
-  Contrastive (MoCo, BarlowTwins, DINO): unfreeze layer2 onwards.
-  Restorative (SparK): unfreeze layer3 onwards (layer2 adapted during pretraining).
+Contrastive (MoCo, BarlowTwins, DINO): unfreeze layer2 onwards.
+Restorative (SparK): unfreeze layer3 onwards (layer2 adapted during pretraining).
 
 Usage:
-  python -m finetune.finetune_padchest --checkpoint outputs/moco-v3/best.pt
-  python -m finetune.finetune_padchest --checkpoint outputs/moco-v3/best.pt --n 5 20 all
+  python -m finetune.finetune --checkpoint outputs/moco-v3/best.pt
+  python -m finetune.finetune --checkpoint outputs/moco-v3/best.pt --n 5 20 all
 """
 
 import argparse
@@ -16,7 +13,6 @@ import json
 import random
 from pathlib import Path
 
-import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import torch.nn as nn
@@ -33,8 +29,7 @@ from data.load_backbone import (
     method_name,
     unfreeze_for_finetuning,
 )
-from finetune._padchest_data import (
-    COLORS,
+from finetune._data import (
     FEW_SHOT_NS,
     N_TRIALS,
     _TRANSFORM,
@@ -44,41 +39,41 @@ from finetune._padchest_data import (
     load_negative_pool,
     load_padchest_splits,
 )
+from finetune._plots import plot_mean_auc, plot_per_disease
 
 _FINETUNE_TRANSFORM = transforms.Compose([
     transforms.RandomResizedCrop(224, scale=(0.08, 1.0)),
     transforms.RandomHorizontalFlip(),
     transforms.RandomRotation(10),
-    transforms.RandomApply([transforms.ColorJitter(brightness=0.8, contrast=0.8)], p=0.8),
-    transforms.RandomApply([transforms.GaussianBlur(kernel_size=9)], p=0.5),
     transforms.ToTensor(),
     transforms.Normalize(mean=_XRAY_MEAN, std=_XRAY_STD),
+    # ColorJitter and GaussianBlur run ~6x faster on tensors than PIL images.
+    transforms.RandomApply([transforms.ColorJitter(brightness=0.8, contrast=0.8)], p=0.8),
+    transforms.RandomApply([transforms.GaussianBlur(kernel_size=9)], p=0.5),
 ])
 
 
 class LabeledImageDataset(Dataset):
-    """Returns (image, label) pairs with a configurable transform."""
-
     def __init__(self, paths: list[Path], labels: np.ndarray, transform):
-        self.paths = paths
+        # Pre-load into memory — avoids disk reads every epoch for small few-shot sets.
+        self.images = [Image.open(p).convert("RGB") for p in paths]
         self.labels = labels
         self.transform = transform
 
     def __len__(self) -> int:
-        return len(self.paths)
+        return len(self.images)
 
     def __getitem__(self, idx: int):
-        img = self.transform(Image.open(self.paths[idx]).convert("RGB"))
-        return img, int(self.labels[idx])
+        return self.transform(self.images[idx]), int(self.labels[idx])
 
 
 def _prototype_head(
     shot_feats: np.ndarray, shot_labels: np.ndarray, n_classes: int
 ) -> nn.Linear:
-    """Linear head whose weights are per-class mean L2-normalised feature vectors.
+    """Linear head initialized to per-class mean L2-normalized feature vectors.
 
-    Starting from the class prototype rather than random weights gives the head
-    a much better starting point — critical when there are only 5–20 training examples.
+    Prototype init gives the head a reasonable starting point with only 5–20 examples —
+    random init would need far more gradient steps to learn the same class separation.
     """
     feat_dim = shot_feats.shape[1]
     protos = np.zeros((n_classes, feat_dim), dtype=np.float32)
@@ -112,16 +107,6 @@ def run_binary_finetune(
     lr_backbone: float = 1e-4,
     wd: float = 0.01,
 ) -> tuple[float, float, float]:
-    """One trial of binary gradient fine-tuning for a single disease.
-
-    Steps:
-      1. Sample n_shot positives + n_shot negatives.
-      2. Prototype-init a 2-class head from frozen backbone features.
-      3. Unfreeze appropriate layers; train with cosine LR decay.
-         BatchNorm stays frozen (preserves pretraining statistics).
-      4. Evaluate on all positive val + balanced negative val examples.
-      5. Restore backbone weights so next trial/disease starts from the same init.
-    """
     n_pos = len(pos_train_paths) if n_shot == -1 else min(n_shot, len(pos_train_paths))
     pos_idx = (
         list(range(len(pos_train_paths)))
@@ -142,8 +127,8 @@ def run_binary_finetune(
     bb_params = [p for p in backbone.parameters() if p.requires_grad]
     optimizer = torch.optim.AdamW(
         [
-            {"params": bb_params,          "lr": lr_backbone},
-            {"params": head.parameters(),  "lr": lr_head},
+            {"params": bb_params,         "lr": lr_backbone},
+            {"params": head.parameters(), "lr": lr_head},
         ],
         weight_decay=wd,
     )
@@ -160,7 +145,7 @@ def run_binary_finetune(
 
     for _ in range(n_epochs):
         backbone.train()
-        # Keep BatchNorm in eval mode to preserve pretraining statistics.
+        # Keep BatchNorm frozen to preserve pretraining statistics.
         for m in backbone.modules():
             if isinstance(m, (nn.BatchNorm1d, nn.BatchNorm2d)):
                 m.train(False)
@@ -194,7 +179,6 @@ def run_binary_finetune(
     except ValueError:
         auc = float("nan")
 
-    # Restore backbone for the next trial / disease.
     backbone.load_state_dict(saved_state)
     for p in backbone.parameters():
         p.requires_grad_(False)
@@ -203,9 +187,7 @@ def run_binary_finetune(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(
-        description="Binary few-shot gradient fine-tuning on PadChest rare diseases"
-    )
+    parser = argparse.ArgumentParser()
     parser.add_argument("--checkpoint", type=str, default="outputs/moco/best.pt")
     parser.add_argument("--data-dir", type=str, default="datasets/padchest")
     parser.add_argument(
@@ -250,7 +232,7 @@ def main() -> None:
         data_dir, set(classes), args.val_frac, args.max_neg_train, args.max_neg_val, args.seed
     )
 
-    # Resume state — keyed by method+epoch so different checkpoints don't clobber each other.
+    # Keyed by method+epoch so different checkpoints don't clobber each other.
     state_path = Path(f"{mname}_ep{epoch}_finetune_state.json")
     all_results: dict = {}
     wandb_run_id = None
@@ -306,7 +288,7 @@ def main() -> None:
         print(f"{'─' * 60}")
         all_results.setdefault(init_name, {})
 
-        backbone = None  # loaded lazily — not loaded at all if everything for this init is cached
+        backbone = None  # loaded lazily — skipped entirely if all results already cached
 
         for disease in classes:
             all_results[init_name].setdefault(disease, {})
@@ -370,7 +352,7 @@ def main() -> None:
                 print(f"  {m:.3f}±{s:.3f}      ", end="")
             print()
 
-    print(f"\nSignificance tests — finetune (paired t-test on AUC, {N_TRIALS} trials)")
+    print(f"\nSignificance tests — paired t-test on AUC, {N_TRIALS} trials")
     for other in ("ImageNet", "Random init"):
         if other not in all_results:
             continue
@@ -382,32 +364,11 @@ def main() -> None:
             lbl = "all" if n == -1 else f"{n:3d}"
             print(f"  {lbl}-shot  SSL vs {other:<15s}: t={t:+.2f}  p={p:.3f}  {sig}")
 
-    fig, ax = plt.subplots(figsize=(7, 5))
     ns = [n for n in sorted(args.n) if n != -1]
-    for init_name in all_results:
-        means = [np.mean([all_results[init_name][d][n]["auc"][0] for d in classes]) for n in ns]
-        stds  = [np.mean([all_results[init_name][d][n]["auc"][1] for d in classes]) for n in ns]
-        ax.plot(ns, means, marker="o", label=init_name, color=COLORS[init_name])
-        ax.fill_between(
-            ns,
-            [m - s for m, s in zip(means, stds)],
-            [m + s for m, s in zip(means, stds)],
-            alpha=0.15, color=COLORS[init_name],
-        )
-    ax.set_xlabel("Shots per disease")
-    ax.set_ylabel("Mean AUC (binary, across diseases)")
-    ax.set_title(f"Finetune — {mname} ep{epoch}\n{len(classes)} diseases, {N_TRIALS} trials")
-    ax.legend()
-    ax.set_xscale("log")
-    ax.set_xticks(ns)
-    ax.set_xticklabels(ns)
-    ax.set_ylim(0.4, 1.0)
-    ax.grid(True, alpha=0.3)
-    plt.tight_layout()
-    out = Path(f"{mname}_ep{epoch}_finetune_binary.png")
-    plt.savefig(out, dpi=150, bbox_inches="tight")
-    print(f"\nSaved plot to {out}")
-    plt.close()
+    out  = Path(f"{mname}_ep{epoch}_finetune_binary.png")
+    out2 = Path(f"{mname}_ep{epoch}_finetune_per_disease.png")
+    plot_mean_auc(all_results, classes, ns, mname, epoch, out, title_prefix="Finetune")
+    plot_per_disease(all_results, classes, ns, mname, epoch, out2, title_prefix="Finetune")
 
     if not args.no_wandb:
         cols = ["init", "disease"] + [f"{n}-shot AUC" for n in sorted(args.n) if n != -1]
@@ -421,7 +382,7 @@ def main() -> None:
                     m, _ = all_results[init_name][disease][n]["auc"]
                     row.append(round(m, 3))
                 table.add_data(*row)
-        wandb.log({"results_table": table, "plot": wandb.Image(str(out))})
+        wandb.log({"results_table": table, "plot": wandb.Image(str(out)), "plot_per_disease": wandb.Image(str(out2))})
         wandb.finish()
 
 

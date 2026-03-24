@@ -1,7 +1,7 @@
 """Count PadChest disease labels with train/val split breakdown.
 
-Applies the same patient-level split and exclusion filters as finetune_padchest.py
-so the counts shown here exactly match what finetune_padchest will use.
+Applies the same patient-level split and exclusion filters as finetune.py
+so the counts shown here exactly match what finetune will use.
 
 Why a label can fail even when train+val total > 23:
   The split is patient-level (not image-level). 20% of *patients* go to val.
@@ -11,36 +11,16 @@ Why a label can fail even when train+val total > 23:
   To fix: download more zips covering that disease, or lower MIN_TEST_PER_CLASS.
 
 Usage:
-  uv run python -m finetune.count_padchest
-  uv run python -m finetune.count_padchest --data-dir datasets/padchest --val-frac 0.2
+  uv run python -m finetune.count_labels
+  uv run python -m finetune.count_labels --data-dir datasets/padchest --val-frac 0.2
 """
 
 import argparse
 import ast
 import csv
-import random
 from pathlib import Path
 
-MIN_TEST_PER_CLASS = 8
-MIN_TRAIN_PER_CLASS = 15
-
-EXCLUDE_LABELS = {
-    "normal", "unchanged", "exclude", "suboptimal study",
-    "nsg tube", "endotracheal tube", "tracheostomy tube", "chest drain tube",
-    "central venous catheter", "central venous catheter via jugular vein",
-    "central venous catheter via subclavian vein",
-    "central venous catheter via umbilical vein",
-    "reservoir central venous catheter", "ventriculoperitoneal drain tube",
-    "pacemaker", "dual chamber device", "single chamber device", "electrical device",
-    "artificial heart valve", "artificial mitral heart valve",
-    "artificial aortic heart valve", "heart valve calcified",
-    "aortic endoprosthesis", "humeral prosthesis", "mammary prosthesis",
-    "osteosynthesis material", "suture material", "metal",
-    "sternotomy", "surgery", "surgery neck", "surgery breast",
-    "surgery lung", "surgery heart", "surgery humeral",
-    "mastectomy", "post radiotherapy changes",
-    "nipple shadow", "end on vessel", "dai",
-}
+from finetune._data import EXCLUDE_LABELS, MIN_TEST_PER_CLASS, MIN_TRAIN_PER_CLASS
 
 
 def count_labels(data_dir: Path, val_frac: float, seed: int) -> None:

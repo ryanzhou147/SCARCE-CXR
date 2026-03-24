@@ -2,15 +2,14 @@
 Run this first to compare checkpoints quickly before committing to full fine-tuning.
 
 Usage:
-  python -m finetune.probe_padchest --checkpoint outputs/moco-v3/best.pt
-  python -m finetune.probe_padchest --checkpoint outputs/moco-v3/best.pt --n 1 5 10 20 all
+  python -m finetune.probe --checkpoint outputs/moco-v3/best.pt
+  python -m finetune.probe --checkpoint outputs/moco-v3/best.pt --n 1 5 10 20 all
 """
 
 import argparse
 import random
 from pathlib import Path
 
-import matplotlib.pyplot as plt
 import numpy as np
 import torch
 from scipy import stats
@@ -22,14 +21,14 @@ from data.load_backbone import (
     load_imagenet_feature_extractor,
     method_name,
 )
-from finetune._padchest_data import (
-    COLORS,
+from finetune._data import (
     FEW_SHOT_NS,
     N_TRIALS,
     extract_features,
     load_negative_pool,
     load_padchest_splits,
 )
+from finetune._plots import plot_mean_auc, plot_per_disease
 
 
 def run_binary_probe(
@@ -196,33 +195,11 @@ def main() -> None:
             lbl = "all" if n == -1 else f"{n:3d}"
             print(f"  {lbl}-shot  SSL vs {other:<15s}: t={t:+.2f}  p={p:.3f}  {sig}")
 
-    fig, ax = plt.subplots(figsize=(7, 5))
     ns = [n for n in sorted(args.n) if n != -1]
-    for init_name in all_results:
-        means = [np.mean([all_results[init_name][d][n]["auc"][0] for d in classes]) for n in ns]
-        stds  = [np.mean([all_results[init_name][d][n]["auc"][1] for d in classes]) for n in ns]
-        ax.plot(ns, means, marker="o", label=init_name, color=COLORS[init_name])
-        ax.fill_between(
-            ns,
-            [m - s for m, s in zip(means, stds)],
-            [m + s for m, s in zip(means, stds)],
-            alpha=0.15, color=COLORS[init_name],
-        )
-    ax.set_xlabel("Shots per disease")
-    ax.set_ylabel("Mean AUC (binary, across diseases)")
-    ax.set_title(f"Probe — {mname} ep{epoch}\n{len(classes)} diseases, {N_TRIALS} trials")
-    ax.legend()
-    ax.set_xscale("log")
-    ax.set_xticks(ns)
-    ax.set_xticklabels(ns)
-    ax.set_ylim(0.4, 1.0)
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    out = Path(f"{mname}_ep{epoch}_probe_binary.png")
-    plt.savefig(out, dpi=150, bbox_inches="tight")
-    print(f"\nSaved plot to {out}")
-    plt.close()
+    out  = Path(f"{mname}_ep{epoch}_probe_binary.png")
+    out2 = Path(f"{mname}_ep{epoch}_probe_per_disease.png")
+    plot_mean_auc(all_results, classes, ns, mname, epoch, out, title_prefix="Probe")
+    plot_per_disease(all_results, classes, ns, mname, epoch, out2, title_prefix="Probe")
 
 
 if __name__ == "__main__":
