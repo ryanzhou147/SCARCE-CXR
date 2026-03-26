@@ -1,0 +1,1488 @@
+========================================
+  PadChest Probe
+========================================
+
+--- probe: outputs_cloud/moco-v3/best.pt ---
+Loading checkpoint from outputs_cloud/moco-v3/best.pt...
+  Method: moco  epoch: 774  device: cuda
+Loading PadChest rare disease splits...
+  Images on disk: 58337
+  Found 74 unique labels across 1076 patients
+  Label counts (train / val):
+    abnormal foreign body                     train=   4  val=   0
+    adenopathy                                train=   8  val=   1
+    air bronchogram                           train=   0  val=   1
+    alveolar pattern                          train=  14  val=   7
+    atypical pneumonia                        train=   2  val=   2
+    azygoesophageal recess shift              train=   1  val=   0
+    bone metastasis                           train=   3  val=   0
+    bronchiectasis                            train=  40  val=  10
+    bullas                                    train=   1  val=   0
+    calcified adenopathy                      train=  13  val=   4
+    calcified fibroadenoma                    train=   0  val=   1
+    calcified granuloma                       train=  96  val=  27
+    calcified mediastinal adenopathy          train=   1  val=   0
+    calcified pleural plaques                 train=   2  val=   0
+    calcified pleural thickening              train=   7  val=   1
+    callus rib fracture                       train=  88  val=  21
+    catheter                                  train=   0  val=   1
+    cavitation                                train=   4  val=   1
+    central vascular redistribution           train=   1  val=   2
+    cervical rib                              train=  12  val=   0
+    clavicle fracture                         train=  15  val=   3
+    costochondral junction hypertrophy        train=   6  val=   1
+    cyst                                      train=   1  val=   0
+    dextrocardia                              train=   1  val=   0
+    double j stent                            train=   2  val=   0
+    external foreign body                     train=   1  val=   0
+    fibrotic band                             train=  38  val=  11
+    flattened diaphragm                       train=   1  val=   1
+    goiter                                    train=  15  val=   5
+    ground glass pattern                      train=   7  val=   0
+    gynecomastia                              train=  10  val=   2
+    heart insufficiency                       train=  13  val=   1
+    hemidiaphragm elevation                   train=  81  val=  23
+    hiatal hernia                             train=  81  val=  20
+    hilar congestion                          train=   2  val=   1
+    humeral fracture                          train=   0  val=   2
+    hydropneumothorax                         train=   1  val=   0
+    hypoexpansion basal                       train=   5  val=   2
+    interstitial pattern                      train=  93  val=  18
+    lobar atelectasis                         train=   3  val=   1
+    major fissure thickening                  train=   1  val=   0
+    mediastinal enlargement                   train=   8  val=   1
+    mediastinal mass                          train=   4  val=   0
+    mediastinic lipomatosis                   train=  18  val=   4
+    miliary opacities                         train=   4  val=   4
+    minor fissure thickening                  train=   7  val=   0
+    multiple nodules                          train=   1  val=   1
+    obesity                                   train=   1  val=   0
+    osteopenia                                train=   1  val=   1
+    pectum carinatum                          train=   7  val=   2
+    pleural plaques                           train=   1  val=   0
+    pleural thickening                        train=  11  val=   0
+    pneumoperitoneo                           train=   1  val=   0
+    pneumothorax                              train=  10  val=   7
+    prosthesis                                train=   1  val=   0
+    pulmonary artery enlargement              train=   9  val=   1
+    pulmonary edema                           train=  12  val=   2
+    pulmonary fibrosis                        train=  24  val=   4
+    pulmonary hypertension                    train=   1  val=   0
+    pulmonary mass                            train=  30  val=  11
+    respiratory distress                      train=   2  val=   1
+    reticular interstitial pattern            train=  32  val=   8
+    reticulonodular interstitial pattern      train=   9  val=   0
+    segmental atelectasis                     train=   1  val=   0
+    soft tissue mass                          train=   2  val=   1
+    subacromial space narrowing               train=   0  val=   1
+    subcutaneous emphysema                    train=   3  val=   0
+    superior mediastinal enlargement          train=   6  val=   4
+    thoracic cage deformation                 train=  12  val=   2
+    tracheal shift                            train=   6  val=   1
+    tuberculosis                              train=   7  val=   1
+    tuberculosis sequelae                     train=   6  val=   1
+    vascular redistribution                   train=   1  val=   0
+    vertebral fracture                        train=   1  val=   1
+Rare disease classes (10): ['bronchiectasis', 'calcified granuloma', 'callus rib fracture', 'fibrotic band', 'hemidiaphragm elevation', 'hiatal hernia', 'interstitial pattern', 'pulmonary fibrosis', 'pulmonary mass', 'reticular interstitial pattern']
+Loading negative pool...
+  Negative pool: 5000 train  2000 val
+
+────────────────────────────────────────────────────────────
+Init: SSL pretrained
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.566±0.129        0.539±0.133        0.598±0.099        0.601±0.119        0.681±0.064      
+  calcified granuloma                         0.536±0.064        0.534±0.057        0.493±0.054        0.558±0.051        0.506±0.061      
+  callus rib fracture                         0.573±0.057        0.570±0.072        0.536±0.066        0.635±0.091        0.568±0.051      
+  fibrotic band                               0.506±0.087        0.511±0.063        0.568±0.089        0.524±0.110        0.588±0.079      
+  hemidiaphragm elevation                     0.653±0.122        0.749±0.118        0.772±0.077        0.836±0.071        0.863±0.042      
+  hiatal hernia                               0.744±0.174        0.869±0.050        0.912±0.033        0.898±0.042        0.923±0.035      
+  interstitial pattern                        0.612±0.097        0.621±0.125        0.630±0.144        0.744±0.092        0.751±0.064      
+  pulmonary fibrosis                          0.938±0.148        0.994±0.019        1.000±0.000        0.988±0.037        1.000±0.000      
+  pulmonary mass                              0.671±0.094        0.672±0.118        0.761±0.085        0.790±0.077        0.834±0.092      
+  reticular interstitial pattern              0.495±0.137        0.641±0.121        0.600±0.160        0.702±0.167        0.798±0.124      
+
+────────────────────────────────────────────────────────────
+Init: ImageNet
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.481±0.133        0.532±0.104        0.559±0.164        0.547±0.088        0.526±0.082      
+  calcified granuloma                         0.495±0.060        0.503±0.067        0.487±0.076        0.560±0.065        0.494±0.090      
+  callus rib fracture                         0.493±0.086        0.513±0.053        0.550±0.096        0.553±0.067        0.469±0.065      
+  fibrotic band                               0.479±0.087        0.540±0.086        0.481±0.080        0.571±0.103        0.589±0.086      
+  hemidiaphragm elevation                     0.555±0.075        0.686±0.096        0.709±0.061        0.765±0.062        0.814±0.057      
+  hiatal hernia                               0.592±0.213        0.850±0.078        0.807±0.075        0.871±0.039        0.882±0.039      
+  interstitial pattern                        0.436±0.079        0.519±0.107        0.563±0.133        0.683±0.103        0.680±0.080      
+  pulmonary fibrosis                          0.581±0.237        0.819±0.106        0.944±0.113        0.963±0.064        0.956±0.063      
+  pulmonary mass                              0.507±0.109        0.560±0.109        0.536±0.078        0.586±0.073        0.632±0.106      
+  reticular interstitial pattern              0.489±0.126        0.527±0.156        0.559±0.109        0.622±0.068        0.647±0.088      
+
+────────────────────────────────────────────────────────────
+Init: Random init
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.506±0.100        0.493±0.081        0.491±0.101        0.523±0.094        0.464±0.098      
+  calcified granuloma                         0.517±0.039        0.514±0.038        0.523±0.029        0.518±0.078        0.545±0.063      
+  callus rib fracture                         0.538±0.063        0.490±0.055        0.553±0.084        0.487±0.116        0.508±0.086      
+  fibrotic band                               0.519±0.113        0.571±0.084        0.556±0.113        0.532±0.096        0.584±0.074      
+  hemidiaphragm elevation                     0.537±0.105        0.598±0.105        0.588±0.105        0.648±0.126        0.729±0.076      
+  hiatal hernia                               0.566±0.118        0.576±0.117        0.692±0.079        0.722±0.062        0.744±0.055      
+  interstitial pattern                        0.533±0.054        0.519±0.059        0.482±0.067        0.525±0.063        0.481±0.084      
+  pulmonary fibrosis                          0.569±0.152        0.631±0.182        0.675±0.150        0.694±0.132        0.762±0.118      
+  pulmonary mass                              0.549±0.079        0.537±0.108        0.579±0.110        0.557±0.059        0.543±0.108      
+  reticular interstitial pattern              0.464±0.062        0.550±0.151        0.497±0.132        0.555±0.138        0.522±0.119      
+
+Significance tests — probe (paired t-test on AUC, 10 trials)
+    1-shot  SSL vs ImageNet       : t=+3.69  p=0.005  **
+    5-shot  SSL vs ImageNet       : t=+3.36  p=0.008  **
+   10-shot  SSL vs ImageNet       : t=+3.24  p=0.010  *
+   20-shot  SSL vs ImageNet       : t=+2.65  p=0.026  *
+   50-shot  SSL vs ImageNet       : t=+3.85  p=0.004  **
+    1-shot  SSL vs Random init    : t=+2.86  p=0.019  *
+    5-shot  SSL vs Random init    : t=+3.08  p=0.013  *
+   10-shot  SSL vs Random init    : t=+3.46  p=0.007  **
+   20-shot  SSL vs Random init    : t=+5.18  p=0.001  **
+   50-shot  SSL vs Random init    : t=+4.34  p=0.002  **
+Saved plot to moco_ep774_probe_binary.png
+Saved per-disease plot to moco_ep774_probe_per_disease.png
+OK: probe outputs_cloud/moco-v3/best.pt
+
+--- probe: outputs_cloud/barlow/best.pt ---
+Loading checkpoint from outputs_cloud/barlow/best.pt...
+  Method: barlow  epoch: 191  device: cuda
+Loading PadChest rare disease splits...
+  Images on disk: 58337
+  Found 74 unique labels across 1076 patients
+  Label counts (train / val):
+    abnormal foreign body                     train=   4  val=   0
+    adenopathy                                train=   8  val=   1
+    air bronchogram                           train=   0  val=   1
+    alveolar pattern                          train=  14  val=   7
+    atypical pneumonia                        train=   2  val=   2
+    azygoesophageal recess shift              train=   1  val=   0
+    bone metastasis                           train=   3  val=   0
+    bronchiectasis                            train=  40  val=  10
+    bullas                                    train=   1  val=   0
+    calcified adenopathy                      train=  13  val=   4
+    calcified fibroadenoma                    train=   0  val=   1
+    calcified granuloma                       train=  96  val=  27
+    calcified mediastinal adenopathy          train=   1  val=   0
+    calcified pleural plaques                 train=   2  val=   0
+    calcified pleural thickening              train=   7  val=   1
+    callus rib fracture                       train=  88  val=  21
+    catheter                                  train=   0  val=   1
+    cavitation                                train=   4  val=   1
+    central vascular redistribution           train=   1  val=   2
+    cervical rib                              train=  12  val=   0
+    clavicle fracture                         train=  15  val=   3
+    costochondral junction hypertrophy        train=   6  val=   1
+    cyst                                      train=   1  val=   0
+    dextrocardia                              train=   1  val=   0
+    double j stent                            train=   2  val=   0
+    external foreign body                     train=   1  val=   0
+    fibrotic band                             train=  38  val=  11
+    flattened diaphragm                       train=   1  val=   1
+    goiter                                    train=  15  val=   5
+    ground glass pattern                      train=   7  val=   0
+    gynecomastia                              train=  10  val=   2
+    heart insufficiency                       train=  13  val=   1
+    hemidiaphragm elevation                   train=  81  val=  23
+    hiatal hernia                             train=  81  val=  20
+    hilar congestion                          train=   2  val=   1
+    humeral fracture                          train=   0  val=   2
+    hydropneumothorax                         train=   1  val=   0
+    hypoexpansion basal                       train=   5  val=   2
+    interstitial pattern                      train=  93  val=  18
+    lobar atelectasis                         train=   3  val=   1
+    major fissure thickening                  train=   1  val=   0
+    mediastinal enlargement                   train=   8  val=   1
+    mediastinal mass                          train=   4  val=   0
+    mediastinic lipomatosis                   train=  18  val=   4
+    miliary opacities                         train=   4  val=   4
+    minor fissure thickening                  train=   7  val=   0
+    multiple nodules                          train=   1  val=   1
+    obesity                                   train=   1  val=   0
+    osteopenia                                train=   1  val=   1
+    pectum carinatum                          train=   7  val=   2
+    pleural plaques                           train=   1  val=   0
+    pleural thickening                        train=  11  val=   0
+    pneumoperitoneo                           train=   1  val=   0
+    pneumothorax                              train=  10  val=   7
+    prosthesis                                train=   1  val=   0
+    pulmonary artery enlargement              train=   9  val=   1
+    pulmonary edema                           train=  12  val=   2
+    pulmonary fibrosis                        train=  24  val=   4
+    pulmonary hypertension                    train=   1  val=   0
+    pulmonary mass                            train=  30  val=  11
+    respiratory distress                      train=   2  val=   1
+    reticular interstitial pattern            train=  32  val=   8
+    reticulonodular interstitial pattern      train=   9  val=   0
+    segmental atelectasis                     train=   1  val=   0
+    soft tissue mass                          train=   2  val=   1
+    subacromial space narrowing               train=   0  val=   1
+    subcutaneous emphysema                    train=   3  val=   0
+    superior mediastinal enlargement          train=   6  val=   4
+    thoracic cage deformation                 train=  12  val=   2
+    tracheal shift                            train=   6  val=   1
+    tuberculosis                              train=   7  val=   1
+    tuberculosis sequelae                     train=   6  val=   1
+    vascular redistribution                   train=   1  val=   0
+    vertebral fracture                        train=   1  val=   1
+Rare disease classes (10): ['bronchiectasis', 'calcified granuloma', 'callus rib fracture', 'fibrotic band', 'hemidiaphragm elevation', 'hiatal hernia', 'interstitial pattern', 'pulmonary fibrosis', 'pulmonary mass', 'reticular interstitial pattern']
+Loading negative pool...
+  Negative pool: 5000 train  2000 val
+
+────────────────────────────────────────────────────────────
+Init: SSL pretrained
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.571±0.108        0.567±0.105        0.591±0.121        0.589±0.100        0.659±0.085      
+  calcified granuloma                         0.525±0.071        0.524±0.059        0.509±0.054        0.524±0.053        0.519±0.058      
+  callus rib fracture                         0.574±0.076        0.551±0.072        0.536±0.071        0.611±0.086        0.511±0.097      
+  fibrotic band                               0.550±0.081        0.550±0.045        0.565±0.096        0.550±0.090        0.582±0.068      
+  hemidiaphragm elevation                     0.641±0.100        0.741±0.076        0.751±0.059        0.804±0.081        0.839±0.040      
+  hiatal hernia                               0.749±0.159        0.827±0.073        0.877±0.038        0.884±0.045        0.910±0.037      
+  interstitial pattern                        0.595±0.118        0.552±0.152        0.536±0.190        0.674±0.162        0.690±0.072      
+  pulmonary fibrosis                          0.869±0.186        0.938±0.084        0.963±0.075        0.994±0.019        1.000±0.000      
+  pulmonary mass                              0.650±0.142        0.687±0.070        0.789±0.083        0.792±0.097        0.850±0.051      
+  reticular interstitial pattern              0.516±0.158        0.592±0.172        0.548±0.194        0.709±0.160        0.755±0.155      
+
+────────────────────────────────────────────────────────────
+Init: ImageNet
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.481±0.133        0.532±0.104        0.559±0.164        0.547±0.088        0.526±0.082      
+  calcified granuloma                         0.495±0.060        0.503±0.067        0.487±0.076        0.560±0.065        0.494±0.090      
+  callus rib fracture                         0.493±0.086        0.513±0.053        0.550±0.096        0.553±0.067        0.469±0.065      
+  fibrotic band                               0.479±0.087        0.540±0.086        0.481±0.080        0.571±0.103        0.589±0.086      
+  hemidiaphragm elevation                     0.555±0.075        0.686±0.096        0.709±0.061        0.765±0.062        0.814±0.057      
+  hiatal hernia                               0.592±0.213        0.850±0.078        0.807±0.075        0.871±0.039        0.882±0.039      
+  interstitial pattern                        0.436±0.079        0.519±0.107        0.563±0.133        0.683±0.103        0.680±0.080      
+  pulmonary fibrosis                          0.581±0.237        0.819±0.106        0.944±0.113        0.963±0.064        0.956±0.063      
+  pulmonary mass                              0.507±0.109        0.560±0.109        0.536±0.078        0.586±0.073        0.632±0.106      
+  reticular interstitial pattern              0.489±0.126        0.527±0.156        0.559±0.109        0.622±0.068        0.647±0.088      
+
+────────────────────────────────────────────────────────────
+Init: Random init
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.528±0.103        0.522±0.097        0.496±0.128        0.492±0.144        0.472±0.122      
+  calcified granuloma                         0.536±0.045        0.508±0.036        0.518±0.067        0.528±0.043        0.526±0.066      
+  callus rib fracture                         0.519±0.082        0.426±0.098        0.499±0.075        0.484±0.094        0.442±0.082      
+  fibrotic band                               0.499±0.116        0.496±0.085        0.532±0.122        0.489±0.099        0.446±0.106      
+  hemidiaphragm elevation                     0.560±0.092        0.592±0.119        0.575±0.102        0.668±0.104        0.775±0.049      
+  hiatal hernia                               0.530±0.079        0.532±0.104        0.588±0.053        0.672±0.098        0.752±0.095      
+  interstitial pattern                        0.505±0.062        0.513±0.097        0.525±0.084        0.569±0.120        0.530±0.114      
+  pulmonary fibrosis                          0.500±0.217        0.544±0.196        0.631±0.197        0.650±0.113        0.738±0.155      
+  pulmonary mass                              0.551±0.059        0.507±0.080        0.501±0.097        0.553±0.089        0.532±0.113      
+  reticular interstitial pattern              0.395±0.067        0.514±0.125        0.422±0.137        0.544±0.157        0.484±0.150      
+
+Significance tests — probe (paired t-test on AUC, 10 trials)
+    1-shot  SSL vs ImageNet       : t=+4.63  p=0.001  **
+    5-shot  SSL vs ImageNet       : t=+3.28  p=0.010  **
+   10-shot  SSL vs ImageNet       : t=+1.84  p=0.098  ns
+   20-shot  SSL vs ImageNet       : t=+1.88  p=0.093  ns
+   50-shot  SSL vs ImageNet       : t=+2.84  p=0.019  *
+    1-shot  SSL vs Random init    : t=+3.24  p=0.010  *
+    5-shot  SSL vs Random init    : t=+3.54  p=0.006  **
+   10-shot  SSL vs Random init    : t=+3.44  p=0.007  **
+   20-shot  SSL vs Random init    : t=+4.77  p=0.001  **
+   50-shot  SSL vs Random init    : t=+5.00  p=0.001  **
+Saved plot to barlow_ep191_probe_binary.png
+Saved per-disease plot to barlow_ep191_probe_per_disease.png
+OK: probe outputs_cloud/barlow/best.pt
+
+--- probe: outputs_cloud/spark/best.pt ---
+Loading checkpoint from outputs_cloud/spark/best.pt...
+  Method: spark  epoch: 199  device: cuda
+Loading PadChest rare disease splits...
+  Images on disk: 58337
+  Found 74 unique labels across 1076 patients
+  Label counts (train / val):
+    abnormal foreign body                     train=   4  val=   0
+    adenopathy                                train=   8  val=   1
+    air bronchogram                           train=   0  val=   1
+    alveolar pattern                          train=  14  val=   7
+    atypical pneumonia                        train=   2  val=   2
+    azygoesophageal recess shift              train=   1  val=   0
+    bone metastasis                           train=   3  val=   0
+    bronchiectasis                            train=  40  val=  10
+    bullas                                    train=   1  val=   0
+    calcified adenopathy                      train=  13  val=   4
+    calcified fibroadenoma                    train=   0  val=   1
+    calcified granuloma                       train=  96  val=  27
+    calcified mediastinal adenopathy          train=   1  val=   0
+    calcified pleural plaques                 train=   2  val=   0
+    calcified pleural thickening              train=   7  val=   1
+    callus rib fracture                       train=  88  val=  21
+    catheter                                  train=   0  val=   1
+    cavitation                                train=   4  val=   1
+    central vascular redistribution           train=   1  val=   2
+    cervical rib                              train=  12  val=   0
+    clavicle fracture                         train=  15  val=   3
+    costochondral junction hypertrophy        train=   6  val=   1
+    cyst                                      train=   1  val=   0
+    dextrocardia                              train=   1  val=   0
+    double j stent                            train=   2  val=   0
+    external foreign body                     train=   1  val=   0
+    fibrotic band                             train=  38  val=  11
+    flattened diaphragm                       train=   1  val=   1
+    goiter                                    train=  15  val=   5
+    ground glass pattern                      train=   7  val=   0
+    gynecomastia                              train=  10  val=   2
+    heart insufficiency                       train=  13  val=   1
+    hemidiaphragm elevation                   train=  81  val=  23
+    hiatal hernia                             train=  81  val=  20
+    hilar congestion                          train=   2  val=   1
+    humeral fracture                          train=   0  val=   2
+    hydropneumothorax                         train=   1  val=   0
+    hypoexpansion basal                       train=   5  val=   2
+    interstitial pattern                      train=  93  val=  18
+    lobar atelectasis                         train=   3  val=   1
+    major fissure thickening                  train=   1  val=   0
+    mediastinal enlargement                   train=   8  val=   1
+    mediastinal mass                          train=   4  val=   0
+    mediastinic lipomatosis                   train=  18  val=   4
+    miliary opacities                         train=   4  val=   4
+    minor fissure thickening                  train=   7  val=   0
+    multiple nodules                          train=   1  val=   1
+    obesity                                   train=   1  val=   0
+    osteopenia                                train=   1  val=   1
+    pectum carinatum                          train=   7  val=   2
+    pleural plaques                           train=   1  val=   0
+    pleural thickening                        train=  11  val=   0
+    pneumoperitoneo                           train=   1  val=   0
+    pneumothorax                              train=  10  val=   7
+    prosthesis                                train=   1  val=   0
+    pulmonary artery enlargement              train=   9  val=   1
+    pulmonary edema                           train=  12  val=   2
+    pulmonary fibrosis                        train=  24  val=   4
+    pulmonary hypertension                    train=   1  val=   0
+    pulmonary mass                            train=  30  val=  11
+    respiratory distress                      train=   2  val=   1
+    reticular interstitial pattern            train=  32  val=   8
+    reticulonodular interstitial pattern      train=   9  val=   0
+    segmental atelectasis                     train=   1  val=   0
+    soft tissue mass                          train=   2  val=   1
+    subacromial space narrowing               train=   0  val=   1
+    subcutaneous emphysema                    train=   3  val=   0
+    superior mediastinal enlargement          train=   6  val=   4
+    thoracic cage deformation                 train=  12  val=   2
+    tracheal shift                            train=   6  val=   1
+    tuberculosis                              train=   7  val=   1
+    tuberculosis sequelae                     train=   6  val=   1
+    vascular redistribution                   train=   1  val=   0
+    vertebral fracture                        train=   1  val=   1
+Rare disease classes (10): ['bronchiectasis', 'calcified granuloma', 'callus rib fracture', 'fibrotic band', 'hemidiaphragm elevation', 'hiatal hernia', 'interstitial pattern', 'pulmonary fibrosis', 'pulmonary mass', 'reticular interstitial pattern']
+Loading negative pool...
+  Negative pool: 5000 train  2000 val
+
+────────────────────────────────────────────────────────────
+Init: SSL pretrained
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.597±0.199        0.610±0.106        0.581±0.122        0.548±0.107        0.640±0.103      
+  calcified granuloma                         0.530±0.030        0.476±0.062        0.473±0.061        0.511±0.060        0.464±0.068      
+  callus rib fracture                         0.554±0.090        0.510±0.066        0.525±0.081        0.587±0.132        0.515±0.064      
+  fibrotic band                               0.519±0.075        0.529±0.102        0.498±0.077        0.462±0.086        0.542±0.071      
+  hemidiaphragm elevation                     0.618±0.120        0.726±0.166        0.784±0.061        0.838±0.053        0.831±0.055      
+  hiatal hernia                               0.675±0.157        0.819±0.066        0.851±0.094        0.880±0.040        0.905±0.052      
+  interstitial pattern                        0.569±0.106        0.562±0.103        0.581±0.174        0.674±0.098        0.735±0.092      
+  pulmonary fibrosis                          0.956±0.089        0.994±0.019        1.000±0.000        1.000±0.000        1.000±0.000      
+  pulmonary mass                              0.609±0.153        0.718±0.145        0.758±0.077        0.782±0.090        0.825±0.091      
+  reticular interstitial pattern              0.525±0.093        0.547±0.122        0.475±0.173        0.592±0.134        0.717±0.108      
+
+────────────────────────────────────────────────────────────
+Init: ImageNet
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.481±0.133        0.532±0.104        0.559±0.164        0.547±0.088        0.526±0.082      
+  calcified granuloma                         0.495±0.060        0.503±0.067        0.487±0.076        0.560±0.065        0.494±0.090      
+  callus rib fracture                         0.493±0.086        0.513±0.053        0.550±0.096        0.553±0.067        0.469±0.065      
+  fibrotic band                               0.479±0.087        0.540±0.086        0.481±0.080        0.571±0.103        0.589±0.086      
+  hemidiaphragm elevation                     0.555±0.075        0.686±0.096        0.709±0.061        0.765±0.062        0.814±0.057      
+  hiatal hernia                               0.592±0.213        0.850±0.078        0.807±0.075        0.871±0.039        0.882±0.039      
+  interstitial pattern                        0.436±0.079        0.519±0.107        0.563±0.133        0.683±0.103        0.680±0.080      
+  pulmonary fibrosis                          0.581±0.237        0.819±0.106        0.944±0.113        0.963±0.064        0.956±0.063      
+  pulmonary mass                              0.507±0.109        0.560±0.109        0.536±0.078        0.586±0.073        0.632±0.106      
+  reticular interstitial pattern              0.489±0.126        0.527±0.156        0.559±0.109        0.622±0.068        0.647±0.088      
+
+────────────────────────────────────────────────────────────
+Init: Random init
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.521±0.100        0.518±0.081        0.508±0.112        0.521±0.098        0.484±0.110      
+  calcified granuloma                         0.525±0.048        0.513±0.040        0.530±0.043        0.513±0.076        0.536±0.056      
+  callus rib fracture                         0.545±0.044        0.505±0.052        0.545±0.071        0.494±0.102        0.502±0.069      
+  fibrotic band                               0.521±0.127        0.571±0.099        0.560±0.112        0.509±0.108        0.560±0.115      
+  hemidiaphragm elevation                     0.543±0.094        0.599±0.093        0.589±0.121        0.659±0.120        0.722±0.045      
+  hiatal hernia                               0.565±0.113        0.601±0.105        0.682±0.082        0.732±0.056        0.739±0.058      
+  interstitial pattern                        0.540±0.062        0.520±0.061        0.506±0.073        0.556±0.084        0.514±0.089      
+  pulmonary fibrosis                          0.544±0.163        0.569±0.238        0.706±0.175        0.650±0.113        0.719±0.140      
+  pulmonary mass                              0.555±0.083        0.558±0.089        0.560±0.098        0.565±0.061        0.558±0.115      
+  reticular interstitial pattern              0.450±0.087        0.572±0.141        0.473±0.142        0.544±0.120        0.523±0.128      
+
+Significance tests — probe (paired t-test on AUC, 10 trials)
+    1-shot  SSL vs ImageNet       : t=+3.28  p=0.010  **
+    5-shot  SSL vs ImageNet       : t=+1.91  p=0.088  ns
+   10-shot  SSL vs ImageNet       : t=+1.29  p=0.228  ns
+   20-shot  SSL vs ImageNet       : t=+0.60  p=0.562  ns
+   50-shot  SSL vs ImageNet       : t=+2.23  p=0.053  ns
+    1-shot  SSL vs Random init    : t=+2.21  p=0.054  ns
+    5-shot  SSL vs Random init    : t=+2.09  p=0.066  ns
+   10-shot  SSL vs Random init    : t=+2.23  p=0.053  ns
+   20-shot  SSL vs Random init    : t=+3.06  p=0.014  *
+   50-shot  SSL vs Random init    : t=+3.42  p=0.008  **
+Saved plot to spark_ep199_probe_binary.png
+Saved per-disease plot to spark_ep199_probe_per_disease.png
+OK: probe outputs_cloud/spark/best.pt
+
+========================================
+  PadChest Finetune
+========================================
+
+--- finetune: outputs_cloud/moco-v3/best.pt ---
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/ryan/.netrc.
+wandb: Currently logged in as: ryanzhou147 (ryanzhou147-none) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run ig9voaa3
+wandb: Tracking run with wandb version 0.25.0
+wandb: Run data is saved locally in /home/ryan/Downloads/CMVR/wandb/run-20260323_235547-ig9voaa3
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run moco_ep774_finetune
+wandb: ⭐️ View project at https://wandb.ai/ryanzhou147-none/cmvr-finetune
+wandb: 🚀 View run at https://wandb.ai/ryanzhou147-none/cmvr-finetune/runs/ig9voaa3
+wandb: uploading history steps 1648-1649, summary, console lines 36-61; uploading artifact run-ig9voaa3-results_table; updating run metadata
+wandb: uploading artifact run-ig9voaa3-results_table
+wandb: uploading media/table/results_table_1650_4c6f4c6a6ca463c32731.table.json; uploading media/images/plot_1650_08eb4901ba63ac87690d.png; uploading media/images/plot_per_disease_1650_c593edb0a537fe56ae34.png; uploading output.log; uploading wandb-summary.json (+ 1 more)
+wandb: uploading history steps 1650-1650, summary
+wandb: 
+wandb: Run history:
+wandb: mean/ImageNet/bronchiectasis/10shot/auc ▁
+wandb:  mean/ImageNet/bronchiectasis/10shot/f1 ▁
+wandb:  mean/ImageNet/bronchiectasis/1shot/auc ▁
+wandb:   mean/ImageNet/bronchiectasis/1shot/f1 ▁
+wandb: mean/ImageNet/bronchiectasis/20shot/auc ▁
+wandb:  mean/ImageNet/bronchiectasis/20shot/f1 ▁
+wandb: mean/ImageNet/bronchiectasis/50shot/auc ▁
+wandb:  mean/ImageNet/bronchiectasis/50shot/f1 ▁
+wandb:  mean/ImageNet/bronchiectasis/5shot/auc ▁
+wandb:   mean/ImageNet/bronchiectasis/5shot/f1 ▁
+wandb:                                    +590 ...
+wandb: 
+wandb: Run summary:
+wandb: mean/ImageNet/bronchiectasis/10shot/auc 0.615
+wandb:  mean/ImageNet/bronchiectasis/10shot/f1 0.4052
+wandb:  mean/ImageNet/bronchiectasis/1shot/auc 0.57
+wandb:   mean/ImageNet/bronchiectasis/1shot/f1 0.34749
+wandb: mean/ImageNet/bronchiectasis/20shot/auc 0.523
+wandb:  mean/ImageNet/bronchiectasis/20shot/f1 0.26667
+wandb: mean/ImageNet/bronchiectasis/50shot/auc 0.592
+wandb:  mean/ImageNet/bronchiectasis/50shot/f1 0.19222
+wandb:  mean/ImageNet/bronchiectasis/5shot/auc 0.577
+wandb:   mean/ImageNet/bronchiectasis/5shot/f1 0.47876
+wandb:                                    +590 ...
+wandb: 
+wandb: 🚀 View run moco_ep774_finetune at: https://wandb.ai/ryanzhou147-none/cmvr-finetune/runs/ig9voaa3
+wandb: ⭐️ View project at: https://wandb.ai/ryanzhou147-none/cmvr-finetune
+wandb: Synced 5 W&B file(s), 3 media file(s), 2 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20260323_235547-ig9voaa3/logs
+Loading checkpoint from outputs_cloud/moco-v3/best.pt...
+  Method: moco  epoch: 774  device: cuda
+Loading PadChest rare disease splits...
+  Images on disk: 58337
+  Found 74 unique labels across 1076 patients
+  Label counts (train / val):
+    abnormal foreign body                     train=   4  val=   0
+    adenopathy                                train=   8  val=   1
+    air bronchogram                           train=   0  val=   1
+    alveolar pattern                          train=  14  val=   7
+    atypical pneumonia                        train=   2  val=   2
+    azygoesophageal recess shift              train=   1  val=   0
+    bone metastasis                           train=   3  val=   0
+    bronchiectasis                            train=  40  val=  10
+    bullas                                    train=   1  val=   0
+    calcified adenopathy                      train=  13  val=   4
+    calcified fibroadenoma                    train=   0  val=   1
+    calcified granuloma                       train=  96  val=  27
+    calcified mediastinal adenopathy          train=   1  val=   0
+    calcified pleural plaques                 train=   2  val=   0
+    calcified pleural thickening              train=   7  val=   1
+    callus rib fracture                       train=  88  val=  21
+    catheter                                  train=   0  val=   1
+    cavitation                                train=   4  val=   1
+    central vascular redistribution           train=   1  val=   2
+    cervical rib                              train=  12  val=   0
+    clavicle fracture                         train=  15  val=   3
+    costochondral junction hypertrophy        train=   6  val=   1
+    cyst                                      train=   1  val=   0
+    dextrocardia                              train=   1  val=   0
+    double j stent                            train=   2  val=   0
+    external foreign body                     train=   1  val=   0
+    fibrotic band                             train=  38  val=  11
+    flattened diaphragm                       train=   1  val=   1
+    goiter                                    train=  15  val=   5
+    ground glass pattern                      train=   7  val=   0
+    gynecomastia                              train=  10  val=   2
+    heart insufficiency                       train=  13  val=   1
+    hemidiaphragm elevation                   train=  81  val=  23
+    hiatal hernia                             train=  81  val=  20
+    hilar congestion                          train=   2  val=   1
+    humeral fracture                          train=   0  val=   2
+    hydropneumothorax                         train=   1  val=   0
+    hypoexpansion basal                       train=   5  val=   2
+    interstitial pattern                      train=  93  val=  18
+    lobar atelectasis                         train=   3  val=   1
+    major fissure thickening                  train=   1  val=   0
+    mediastinal enlargement                   train=   8  val=   1
+    mediastinal mass                          train=   4  val=   0
+    mediastinic lipomatosis                   train=  18  val=   4
+    miliary opacities                         train=   4  val=   4
+    minor fissure thickening                  train=   7  val=   0
+    multiple nodules                          train=   1  val=   1
+    obesity                                   train=   1  val=   0
+    osteopenia                                train=   1  val=   1
+    pectum carinatum                          train=   7  val=   2
+    pleural plaques                           train=   1  val=   0
+    pleural thickening                        train=  11  val=   0
+    pneumoperitoneo                           train=   1  val=   0
+    pneumothorax                              train=  10  val=   7
+    prosthesis                                train=   1  val=   0
+    pulmonary artery enlargement              train=   9  val=   1
+    pulmonary edema                           train=  12  val=   2
+    pulmonary fibrosis                        train=  24  val=   4
+    pulmonary hypertension                    train=   1  val=   0
+    pulmonary mass                            train=  30  val=  11
+    respiratory distress                      train=   2  val=   1
+    reticular interstitial pattern            train=  32  val=   8
+    reticulonodular interstitial pattern      train=   9  val=   0
+    segmental atelectasis                     train=   1  val=   0
+    soft tissue mass                          train=   2  val=   1
+    subacromial space narrowing               train=   0  val=   1
+    subcutaneous emphysema                    train=   3  val=   0
+    superior mediastinal enlargement          train=   6  val=   4
+    thoracic cage deformation                 train=  12  val=   2
+    tracheal shift                            train=   6  val=   1
+    tuberculosis                              train=   7  val=   1
+    tuberculosis sequelae                     train=   6  val=   1
+    vascular redistribution                   train=   1  val=   0
+    vertebral fracture                        train=   1  val=   1
+Rare disease classes (10): ['bronchiectasis', 'calcified granuloma', 'callus rib fracture', 'fibrotic band', 'hemidiaphragm elevation', 'hiatal hernia', 'interstitial pattern', 'pulmonary fibrosis', 'pulmonary mass', 'reticular interstitial pattern']
+Loading negative pool...
+  Negative pool: 5000 train  2000 val
+
+────────────────────────────────────────────────────────────
+Init: SSL pretrained
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.563±0.113        0.508±0.167        0.593±0.108        0.501±0.149        0.577±0.180      
+  calcified granuloma                         0.566±0.051        0.550±0.068        0.529±0.080        0.547±0.072        0.474±0.043      
+  callus rib fracture                         0.556±0.089        0.524±0.048        0.498±0.069        0.535±0.129        0.531±0.037      
+  fibrotic band                               0.495±0.098        0.505±0.083        0.476±0.113        0.441±0.124        0.537±0.126      
+  hemidiaphragm elevation                     0.677±0.129        0.818±0.099        0.854±0.065        0.884±0.046        0.836±0.131      
+  hiatal hernia                               0.772±0.137        0.909±0.032        0.944±0.034        0.928±0.060        0.744±0.167      
+  interstitial pattern                        0.562±0.092        0.590±0.121        0.592±0.169        0.668±0.158        0.482±0.139      
+  pulmonary fibrosis                          0.894±0.218        0.975±0.041        0.994±0.019        1.000±0.000        1.000±0.000      
+  pulmonary mass                              0.583±0.132        0.736±0.097        0.757±0.069        0.802±0.071        0.874±0.049      
+  reticular interstitial pattern              0.548±0.119        0.616±0.122        0.614±0.135        0.595±0.150        0.720±0.159      
+
+────────────────────────────────────────────────────────────
+Init: ImageNet
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.570±0.143        0.577±0.110        0.615±0.123        0.523±0.172        0.592±0.105      
+  calcified granuloma                         0.488±0.044        0.516±0.072        0.521±0.059        0.523±0.078        0.499±0.065      
+  callus rib fracture                         0.546±0.075        0.551±0.063        0.528±0.071        0.539±0.081        0.544±0.087      
+  fibrotic band                               0.487±0.133        0.501±0.060        0.483±0.083        0.521±0.138        0.425±0.121      
+  hemidiaphragm elevation                     0.585±0.173        0.701±0.089        0.754±0.115        0.692±0.119        0.724±0.076      
+  hiatal hernia                               0.601±0.193        0.753±0.175        0.859±0.067        0.794±0.085        0.738±0.141      
+  interstitial pattern                        0.533±0.135        0.564±0.163        0.609±0.134        0.629±0.107        0.627±0.087      
+  pulmonary fibrosis                          0.781±0.196        0.919±0.131        0.975±0.075        0.950±0.088        0.956±0.079      
+  pulmonary mass                              0.566±0.144        0.608±0.126        0.670±0.115        0.569±0.129        0.686±0.139      
+  reticular interstitial pattern              0.483±0.166        0.636±0.148        0.614±0.135        0.570±0.129        0.620±0.158      
+
+────────────────────────────────────────────────────────────
+Init: Random init
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.531±0.112        0.531±0.104        0.525±0.087        0.497±0.099        0.538±0.124      
+  calcified granuloma                         0.527±0.038        0.534±0.069        0.517±0.070        0.483±0.049        0.495±0.077      
+  callus rib fracture                         0.493±0.099        0.521±0.114        0.538±0.064        0.495±0.104        0.479±0.078      
+  fibrotic band                               0.534±0.117        0.554±0.093        0.552±0.150        0.472±0.074        0.510±0.083      
+  hemidiaphragm elevation                     0.598±0.132        0.713±0.103        0.761±0.083        0.746±0.080        0.784±0.044      
+  hiatal hernia                               0.626±0.116        0.694±0.077        0.728±0.079        0.730±0.086        0.781±0.068      
+  interstitial pattern                        0.546±0.111        0.550±0.081        0.533±0.099        0.535±0.084        0.468±0.113      
+  pulmonary fibrosis                          0.656±0.252        0.794±0.177        0.856±0.137        0.800±0.195        0.969±0.058      
+  pulmonary mass                              0.543±0.064        0.536±0.069        0.547±0.122        0.478±0.099        0.547±0.081      
+  reticular interstitial pattern              0.466±0.124        0.481±0.121        0.433±0.094        0.534±0.093        0.516±0.127      
+
+Significance tests — paired t-test on AUC, 10 trials
+    1-shot  SSL vs ImageNet       : t=+3.23  p=0.010  *
+    5-shot  SSL vs ImageNet       : t=+1.74  p=0.116  ns
+   10-shot  SSL vs ImageNet       : t=+1.42  p=0.189  ns
+   20-shot  SSL vs ImageNet       : t=+1.91  p=0.088  ns
+   50-shot  SSL vs ImageNet       : t=+1.21  p=0.259  ns
+    1-shot  SSL vs Random init    : t=+2.89  p=0.018  *
+    5-shot  SSL vs Random init    : t=+2.68  p=0.025  *
+   10-shot  SSL vs Random init    : t=+2.68  p=0.025  *
+   20-shot  SSL vs Random init    : t=+3.33  p=0.009  **
+   50-shot  SSL vs Random init    : t=+1.95  p=0.083  ns
+Saved plot to moco_ep774_finetune_binary.png
+Saved per-disease plot to moco_ep774_finetune_per_disease.png
+OK: finetune outputs_cloud/moco-v3/best.pt
+
+--- finetune: outputs_cloud/barlow/best.pt ---
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/ryan/.netrc.
+wandb: Currently logged in as: ryanzhou147 (ryanzhou147-none) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run ev6kcui7
+wandb: Tracking run with wandb version 0.25.0
+wandb: Run data is saved locally in /home/ryan/Downloads/CMVR/wandb/run-20260324_054442-ev6kcui7
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run barlow_ep191_finetune
+wandb: ⭐️ View project at https://wandb.ai/ryanzhou147-none/cmvr-finetune
+wandb: 🚀 View run at https://wandb.ai/ryanzhou147-none/cmvr-finetune/runs/ev6kcui7
+wandb: uploading artifact run-ev6kcui7-results_table; updating run metadata
+wandb: uploading artifact run-ev6kcui7-results_table
+wandb: uploading data
+wandb: 
+wandb: Run history:
+wandb: mean/ImageNet/bronchiectasis/10shot/auc ▁
+wandb:  mean/ImageNet/bronchiectasis/10shot/f1 ▁
+wandb:  mean/ImageNet/bronchiectasis/1shot/auc ▁
+wandb:   mean/ImageNet/bronchiectasis/1shot/f1 ▁
+wandb: mean/ImageNet/bronchiectasis/20shot/auc ▁
+wandb:  mean/ImageNet/bronchiectasis/20shot/f1 ▁
+wandb: mean/ImageNet/bronchiectasis/50shot/auc ▁
+wandb:  mean/ImageNet/bronchiectasis/50shot/f1 ▁
+wandb:  mean/ImageNet/bronchiectasis/5shot/auc ▁
+wandb:   mean/ImageNet/bronchiectasis/5shot/f1 ▁
+wandb:                                    +590 ...
+wandb: 
+wandb: Run summary:
+wandb: mean/ImageNet/bronchiectasis/10shot/auc 0.5685
+wandb:  mean/ImageNet/bronchiectasis/10shot/f1 0.34922
+wandb:  mean/ImageNet/bronchiectasis/1shot/auc 0.588
+wandb:   mean/ImageNet/bronchiectasis/1shot/f1 0.25916
+wandb: mean/ImageNet/bronchiectasis/20shot/auc 0.548
+wandb:  mean/ImageNet/bronchiectasis/20shot/f1 0.46667
+wandb: mean/ImageNet/bronchiectasis/50shot/auc 0.53
+wandb:  mean/ImageNet/bronchiectasis/50shot/f1 0.37575
+wandb:  mean/ImageNet/bronchiectasis/5shot/auc 0.521
+wandb:   mean/ImageNet/bronchiectasis/5shot/f1 0.21865
+wandb:                                    +590 ...
+wandb: 
+wandb: 🚀 View run barlow_ep191_finetune at: https://wandb.ai/ryanzhou147-none/cmvr-finetune/runs/ev6kcui7
+wandb: ⭐️ View project at: https://wandb.ai/ryanzhou147-none/cmvr-finetune
+wandb: Synced 5 W&B file(s), 3 media file(s), 2 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20260324_054442-ev6kcui7/logs
+Loading checkpoint from outputs_cloud/barlow/best.pt...
+  Method: barlow  epoch: 191  device: cuda
+Loading PadChest rare disease splits...
+  Images on disk: 58337
+  Found 74 unique labels across 1076 patients
+  Label counts (train / val):
+    abnormal foreign body                     train=   4  val=   0
+    adenopathy                                train=   8  val=   1
+    air bronchogram                           train=   0  val=   1
+    alveolar pattern                          train=  14  val=   7
+    atypical pneumonia                        train=   2  val=   2
+    azygoesophageal recess shift              train=   1  val=   0
+    bone metastasis                           train=   3  val=   0
+    bronchiectasis                            train=  40  val=  10
+    bullas                                    train=   1  val=   0
+    calcified adenopathy                      train=  13  val=   4
+    calcified fibroadenoma                    train=   0  val=   1
+    calcified granuloma                       train=  96  val=  27
+    calcified mediastinal adenopathy          train=   1  val=   0
+    calcified pleural plaques                 train=   2  val=   0
+    calcified pleural thickening              train=   7  val=   1
+    callus rib fracture                       train=  88  val=  21
+    catheter                                  train=   0  val=   1
+    cavitation                                train=   4  val=   1
+    central vascular redistribution           train=   1  val=   2
+    cervical rib                              train=  12  val=   0
+    clavicle fracture                         train=  15  val=   3
+    costochondral junction hypertrophy        train=   6  val=   1
+    cyst                                      train=   1  val=   0
+    dextrocardia                              train=   1  val=   0
+    double j stent                            train=   2  val=   0
+    external foreign body                     train=   1  val=   0
+    fibrotic band                             train=  38  val=  11
+    flattened diaphragm                       train=   1  val=   1
+    goiter                                    train=  15  val=   5
+    ground glass pattern                      train=   7  val=   0
+    gynecomastia                              train=  10  val=   2
+    heart insufficiency                       train=  13  val=   1
+    hemidiaphragm elevation                   train=  81  val=  23
+    hiatal hernia                             train=  81  val=  20
+    hilar congestion                          train=   2  val=   1
+    humeral fracture                          train=   0  val=   2
+    hydropneumothorax                         train=   1  val=   0
+    hypoexpansion basal                       train=   5  val=   2
+    interstitial pattern                      train=  93  val=  18
+    lobar atelectasis                         train=   3  val=   1
+    major fissure thickening                  train=   1  val=   0
+    mediastinal enlargement                   train=   8  val=   1
+    mediastinal mass                          train=   4  val=   0
+    mediastinic lipomatosis                   train=  18  val=   4
+    miliary opacities                         train=   4  val=   4
+    minor fissure thickening                  train=   7  val=   0
+    multiple nodules                          train=   1  val=   1
+    obesity                                   train=   1  val=   0
+    osteopenia                                train=   1  val=   1
+    pectum carinatum                          train=   7  val=   2
+    pleural plaques                           train=   1  val=   0
+    pleural thickening                        train=  11  val=   0
+    pneumoperitoneo                           train=   1  val=   0
+    pneumothorax                              train=  10  val=   7
+    prosthesis                                train=   1  val=   0
+    pulmonary artery enlargement              train=   9  val=   1
+    pulmonary edema                           train=  12  val=   2
+    pulmonary fibrosis                        train=  24  val=   4
+    pulmonary hypertension                    train=   1  val=   0
+    pulmonary mass                            train=  30  val=  11
+    respiratory distress                      train=   2  val=   1
+    reticular interstitial pattern            train=  32  val=   8
+    reticulonodular interstitial pattern      train=   9  val=   0
+    segmental atelectasis                     train=   1  val=   0
+    soft tissue mass                          train=   2  val=   1
+    subacromial space narrowing               train=   0  val=   1
+    subcutaneous emphysema                    train=   3  val=   0
+    superior mediastinal enlargement          train=   6  val=   4
+    thoracic cage deformation                 train=  12  val=   2
+    tracheal shift                            train=   6  val=   1
+    tuberculosis                              train=   7  val=   1
+    tuberculosis sequelae                     train=   6  val=   1
+    vascular redistribution                   train=   1  val=   0
+    vertebral fracture                        train=   1  val=   1
+Rare disease classes (10): ['bronchiectasis', 'calcified granuloma', 'callus rib fracture', 'fibrotic band', 'hemidiaphragm elevation', 'hiatal hernia', 'interstitial pattern', 'pulmonary fibrosis', 'pulmonary mass', 'reticular interstitial pattern']
+Loading negative pool...
+  Negative pool: 5000 train  2000 val
+
+────────────────────────────────────────────────────────────
+Init: SSL pretrained
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.548±0.093        0.570±0.066        0.549±0.148        0.534±0.076        0.622±0.065      
+  calcified granuloma                         0.531±0.060        0.523±0.050        0.489±0.064        0.523±0.060        0.496±0.071      
+  callus rib fracture                         0.570±0.061        0.566±0.070        0.540±0.073        0.598±0.106        0.534±0.048      
+  fibrotic band                               0.545±0.076        0.534±0.072        0.535±0.089        0.493±0.088        0.543±0.075      
+  hemidiaphragm elevation                     0.652±0.104        0.768±0.095        0.785±0.054        0.840±0.053        0.854±0.042      
+  hiatal hernia                               0.780±0.144        0.850±0.061        0.892±0.040        0.896±0.048        0.917±0.046      
+  interstitial pattern                        0.596±0.099        0.593±0.124        0.556±0.200        0.704±0.138        0.704±0.068      
+  pulmonary fibrosis                          0.887±0.174        0.981±0.040        0.994±0.019        1.000±0.000        1.000±0.000      
+  pulmonary mass                              0.653±0.123        0.732±0.095        0.770±0.074        0.809±0.060        0.845±0.061      
+  reticular interstitial pattern              0.498±0.149        0.634±0.129        0.528±0.162        0.689±0.144        0.770±0.094      
+
+────────────────────────────────────────────────────────────
+Init: ImageNet
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.588±0.144        0.521±0.103        0.568±0.126        0.548±0.135        0.530±0.173      
+  calcified granuloma                         0.542±0.061        0.492±0.057        0.523±0.082        0.527±0.106        0.484±0.043      
+  callus rib fracture                         0.539±0.071        0.516±0.079        0.482±0.066        0.544±0.087        0.492±0.091      
+  fibrotic band                               0.526±0.114        0.533±0.078        0.502±0.130        0.449±0.132        0.418±0.134      
+  hemidiaphragm elevation                     0.571±0.131        0.733±0.080        0.755±0.101        0.710±0.097        0.722±0.062      
+  hiatal hernia                               0.653±0.162        0.837±0.067        0.853±0.085        0.736±0.079        0.700±0.172      
+  interstitial pattern                        0.529±0.078        0.561±0.090        0.586±0.130        0.609±0.109        0.624±0.078      
+  pulmonary fibrosis                          0.781±0.192        0.875±0.140        0.975±0.057        0.925±0.124        0.994±0.019      
+  pulmonary mass                              0.558±0.114        0.569±0.125        0.624±0.113        0.672±0.106        0.680±0.149      
+  reticular interstitial pattern              0.550±0.106        0.625±0.141        0.637±0.190        0.603±0.105        0.653±0.152      
+
+────────────────────────────────────────────────────────────
+Init: Random init
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.535±0.101        0.489±0.072        0.528±0.104        0.470±0.079        0.524±0.130      
+  calcified granuloma                         0.528±0.043        0.525±0.037        0.523±0.073        0.504±0.054        0.510±0.087      
+  callus rib fracture                         0.527±0.065        0.540±0.110        0.514±0.093        0.548±0.091        0.491±0.054      
+  fibrotic band                               0.561±0.136        0.494±0.080        0.528±0.140        0.488±0.086        0.536±0.087      
+  hemidiaphragm elevation                     0.623±0.095        0.695±0.102        0.769±0.051        0.720±0.093        0.787±0.046      
+  hiatal hernia                               0.592±0.108        0.617±0.120        0.676±0.065        0.702±0.091        0.765±0.080      
+  interstitial pattern                        0.527±0.114        0.508±0.082        0.550±0.104        0.574±0.088        0.539±0.055      
+  pulmonary fibrosis                          0.681±0.208        0.744±0.238        0.944±0.065        0.869±0.219        0.969±0.075      
+  pulmonary mass                              0.570±0.056        0.507±0.109        0.520±0.096        0.546±0.096        0.536±0.092      
+  reticular interstitial pattern              0.483±0.125        0.536±0.133        0.453±0.118        0.533±0.149        0.506±0.154      
+
+Significance tests — paired t-test on AUC, 10 trials
+    1-shot  SSL vs ImageNet       : t=+2.15  p=0.060  ns
+    5-shot  SSL vs ImageNet       : t=+3.11  p=0.013  *
+   10-shot  SSL vs ImageNet       : t=+0.62  p=0.551  ns
+   20-shot  SSL vs ImageNet       : t=+4.16  p=0.002  **
+   50-shot  SSL vs ImageNet       : t=+4.67  p=0.001  **
+    1-shot  SSL vs Random init    : t=+2.61  p=0.028  *
+    5-shot  SSL vs Random init    : t=+3.86  p=0.004  **
+   10-shot  SSL vs Random init    : t=+2.13  p=0.062  ns
+   20-shot  SSL vs Random init    : t=+4.45  p=0.002  **
+   50-shot  SSL vs Random init    : t=+3.26  p=0.010  **
+Saved plot to barlow_ep191_finetune_binary.png
+Saved per-disease plot to barlow_ep191_finetune_per_disease.png
+OK: finetune outputs_cloud/barlow/best.pt
+
+--- finetune: outputs_cloud/spark/best.pt ---
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/ryan/.netrc.
+wandb: Currently logged in as: ryanzhou147 (ryanzhou147-none) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run clhvvv76
+wandb: Tracking run with wandb version 0.25.0
+wandb: Run data is saved locally in /home/ryan/Downloads/CMVR/wandb/run-20260324_092435-clhvvv76
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run spark_ep199_finetune
+wandb: ⭐️ View project at https://wandb.ai/ryanzhou147-none/cmvr-finetune
+wandb: 🚀 View run at https://wandb.ai/ryanzhou147-none/cmvr-finetune/runs/clhvvv76
+========================================
+  PadChest Probe
+========================================
+
+--- probe: outputs_cloud/moco-v3/best.pt ---
+Loading checkpoint from outputs_cloud/moco-v3/best.pt...
+  Method: moco  epoch: 774  device: cuda
+Loading PadChest rare disease splits...
+  Images on disk: 58337
+  Found 74 unique labels across 1076 patients
+  Label counts (train / val):
+    abnormal foreign body                     train=   4  val=   0
+    adenopathy                                train=   8  val=   1
+    air bronchogram                           train=   0  val=   1
+    alveolar pattern                          train=  14  val=   7
+    atypical pneumonia                        train=   2  val=   2
+    azygoesophageal recess shift              train=   1  val=   0
+    bone metastasis                           train=   3  val=   0
+    bronchiectasis                            train=  40  val=  10
+    bullas                                    train=   1  val=   0
+    calcified adenopathy                      train=  13  val=   4
+    calcified fibroadenoma                    train=   0  val=   1
+    calcified granuloma                       train=  96  val=  27
+    calcified mediastinal adenopathy          train=   1  val=   0
+    calcified pleural plaques                 train=   2  val=   0
+    calcified pleural thickening              train=   7  val=   1
+    callus rib fracture                       train=  88  val=  21
+    catheter                                  train=   0  val=   1
+    cavitation                                train=   4  val=   1
+    central vascular redistribution           train=   1  val=   2
+    cervical rib                              train=  12  val=   0
+    clavicle fracture                         train=  15  val=   3
+    costochondral junction hypertrophy        train=   6  val=   1
+    cyst                                      train=   1  val=   0
+    dextrocardia                              train=   1  val=   0
+    double j stent                            train=   2  val=   0
+    external foreign body                     train=   1  val=   0
+    fibrotic band                             train=  38  val=  11
+    flattened diaphragm                       train=   1  val=   1
+    goiter                                    train=  15  val=   5
+    ground glass pattern                      train=   7  val=   0
+    gynecomastia                              train=  10  val=   2
+    heart insufficiency                       train=  13  val=   1
+    hemidiaphragm elevation                   train=  81  val=  23
+    hiatal hernia                             train=  81  val=  20
+    hilar congestion                          train=   2  val=   1
+    humeral fracture                          train=   0  val=   2
+    hydropneumothorax                         train=   1  val=   0
+    hypoexpansion basal                       train=   5  val=   2
+    interstitial pattern                      train=  93  val=  18
+    lobar atelectasis                         train=   3  val=   1
+    major fissure thickening                  train=   1  val=   0
+    mediastinal enlargement                   train=   8  val=   1
+    mediastinal mass                          train=   4  val=   0
+    mediastinic lipomatosis                   train=  18  val=   4
+    miliary opacities                         train=   4  val=   4
+    minor fissure thickening                  train=   7  val=   0
+    multiple nodules                          train=   1  val=   1
+    obesity                                   train=   1  val=   0
+    osteopenia                                train=   1  val=   1
+    pectum carinatum                          train=   7  val=   2
+    pleural plaques                           train=   1  val=   0
+    pleural thickening                        train=  11  val=   0
+    pneumoperitoneo                           train=   1  val=   0
+    pneumothorax                              train=  10  val=   7
+    prosthesis                                train=   1  val=   0
+    pulmonary artery enlargement              train=   9  val=   1
+    pulmonary edema                           train=  12  val=   2
+    pulmonary fibrosis                        train=  24  val=   4
+    pulmonary hypertension                    train=   1  val=   0
+    pulmonary mass                            train=  30  val=  11
+    respiratory distress                      train=   2  val=   1
+    reticular interstitial pattern            train=  32  val=   8
+    reticulonodular interstitial pattern      train=   9  val=   0
+    segmental atelectasis                     train=   1  val=   0
+    soft tissue mass                          train=   2  val=   1
+    subacromial space narrowing               train=   0  val=   1
+    subcutaneous emphysema                    train=   3  val=   0
+    superior mediastinal enlargement          train=   6  val=   4
+    thoracic cage deformation                 train=  12  val=   2
+    tracheal shift                            train=   6  val=   1
+    tuberculosis                              train=   7  val=   1
+    tuberculosis sequelae                     train=   6  val=   1
+    vascular redistribution                   train=   1  val=   0
+    vertebral fracture                        train=   1  val=   1
+Rare disease classes (10): ['bronchiectasis', 'calcified granuloma', 'callus rib fracture', 'fibrotic band', 'hemidiaphragm elevation', 'hiatal hernia', 'interstitial pattern', 'pulmonary fibrosis', 'pulmonary mass', 'reticular interstitial pattern']
+Loading negative pool...
+  Negative pool: 5000 train  2000 val
+
+────────────────────────────────────────────────────────────
+Init: SSL pretrained
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.566±0.129        0.539±0.133        0.598±0.099        0.601±0.119        0.681±0.064      
+  calcified granuloma                         0.536±0.064        0.534±0.057        0.493±0.054        0.558±0.051        0.506±0.061      
+  callus rib fracture                         0.573±0.057        0.570±0.072        0.536±0.066        0.635±0.091        0.568±0.051      
+  fibrotic band                               0.506±0.087        0.511±0.063        0.568±0.089        0.524±0.110        0.588±0.079      
+  hemidiaphragm elevation                     0.653±0.122        0.749±0.118        0.772±0.077        0.836±0.071        0.863±0.042      
+  hiatal hernia                               0.744±0.174        0.869±0.050        0.912±0.033        0.898±0.042        0.923±0.035      
+  interstitial pattern                        0.612±0.097        0.621±0.125        0.630±0.144        0.744±0.092        0.751±0.064      
+  pulmonary fibrosis                          0.938±0.148        0.994±0.019        1.000±0.000        0.988±0.037        1.000±0.000      
+  pulmonary mass                              0.671±0.094        0.672±0.118        0.761±0.085        0.790±0.077        0.834±0.092      
+  reticular interstitial pattern              0.495±0.137        0.641±0.121        0.600±0.160        0.702±0.167        0.798±0.124      
+
+────────────────────────────────────────────────────────────
+Init: ImageNet
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.481±0.133        0.532±0.104        0.559±0.164        0.547±0.088        0.526±0.082      
+  calcified granuloma                         0.495±0.060        0.503±0.067        0.487±0.076        0.560±0.065        0.494±0.090      
+  callus rib fracture                         0.493±0.086        0.513±0.053        0.550±0.096        0.553±0.067        0.469±0.065      
+  fibrotic band                               0.479±0.087        0.540±0.086        0.481±0.080        0.571±0.103        0.589±0.086      
+  hemidiaphragm elevation                     0.555±0.075        0.686±0.096        0.709±0.061        0.765±0.062        0.814±0.057      
+  hiatal hernia                               0.592±0.213        0.850±0.078        0.807±0.075        0.871±0.039        0.882±0.039      
+  interstitial pattern                        0.436±0.079        0.519±0.107        0.563±0.133        0.683±0.103        0.680±0.080      
+  pulmonary fibrosis                          0.581±0.237        0.819±0.106        0.944±0.113        0.963±0.064        0.956±0.063      
+  pulmonary mass                              0.507±0.109        0.560±0.109        0.536±0.078        0.586±0.073        0.632±0.106      
+  reticular interstitial pattern              0.489±0.126        0.527±0.156        0.559±0.109        0.622±0.068        0.647±0.088      
+
+────────────────────────────────────────────────────────────
+Init: Random init
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.501±0.087        0.484±0.078        0.502±0.097        0.523±0.101        0.471±0.108      
+  calcified granuloma                         0.514±0.037        0.495±0.044        0.523±0.032        0.516±0.065        0.528±0.062      
+  callus rib fracture                         0.525±0.078        0.403±0.075        0.526±0.096        0.489±0.101        0.454±0.068      
+  fibrotic band                               0.510±0.101        0.545±0.082        0.553±0.116        0.535±0.107        0.559±0.075      
+  hemidiaphragm elevation                     0.529±0.082        0.573±0.106        0.583±0.121        0.638±0.104        0.729±0.071      
+  hiatal hernia                               0.536±0.074        0.518±0.099        0.640±0.068        0.648±0.072        0.708±0.076      
+  interstitial pattern                        0.520±0.051        0.473±0.084        0.477±0.060        0.515±0.063        0.488±0.092      
+  pulmonary fibrosis                          0.531±0.166        0.594±0.211        0.637±0.191        0.656±0.116        0.756±0.110      
+  pulmonary mass                              0.555±0.068        0.509±0.078        0.535±0.097        0.549±0.069        0.544±0.124      
+  reticular interstitial pattern              0.464±0.091        0.541±0.140        0.486±0.145        0.556±0.139        0.503±0.118      
+
+Significance tests — probe (paired t-test on AUC, 10 trials)
+    1-shot  SSL vs ImageNet       : t=+3.69  p=0.005  **
+    5-shot  SSL vs ImageNet       : t=+3.36  p=0.008  **
+   10-shot  SSL vs ImageNet       : t=+3.24  p=0.010  *
+   20-shot  SSL vs ImageNet       : t=+2.65  p=0.026  *
+   50-shot  SSL vs ImageNet       : t=+3.85  p=0.004  **
+    1-shot  SSL vs Random init    : t=+2.91  p=0.017  *
+    5-shot  SSL vs Random init    : t=+3.69  p=0.005  **
+   10-shot  SSL vs Random init    : t=+3.55  p=0.006  **
+   20-shot  SSL vs Random init    : t=+4.95  p=0.001  **
+   50-shot  SSL vs Random init    : t=+5.11  p=0.001  **
+Saved plot to moco_ep774_probe_binary.png
+Saved per-disease plot to moco_ep774_probe_per_disease.png
+OK: probe outputs_cloud/moco-v3/best.pt
+
+--- probe: outputs_cloud/barlow/best.pt ---
+Loading checkpoint from outputs_cloud/barlow/best.pt...
+  Method: barlow  epoch: 191  device: cuda
+Loading PadChest rare disease splits...
+  Images on disk: 58337
+  Found 74 unique labels across 1076 patients
+  Label counts (train / val):
+    abnormal foreign body                     train=   4  val=   0
+    adenopathy                                train=   8  val=   1
+    air bronchogram                           train=   0  val=   1
+    alveolar pattern                          train=  14  val=   7
+    atypical pneumonia                        train=   2  val=   2
+    azygoesophageal recess shift              train=   1  val=   0
+    bone metastasis                           train=   3  val=   0
+    bronchiectasis                            train=  40  val=  10
+    bullas                                    train=   1  val=   0
+    calcified adenopathy                      train=  13  val=   4
+    calcified fibroadenoma                    train=   0  val=   1
+    calcified granuloma                       train=  96  val=  27
+    calcified mediastinal adenopathy          train=   1  val=   0
+    calcified pleural plaques                 train=   2  val=   0
+    calcified pleural thickening              train=   7  val=   1
+    callus rib fracture                       train=  88  val=  21
+    catheter                                  train=   0  val=   1
+    cavitation                                train=   4  val=   1
+    central vascular redistribution           train=   1  val=   2
+    cervical rib                              train=  12  val=   0
+    clavicle fracture                         train=  15  val=   3
+    costochondral junction hypertrophy        train=   6  val=   1
+    cyst                                      train=   1  val=   0
+    dextrocardia                              train=   1  val=   0
+    double j stent                            train=   2  val=   0
+    external foreign body                     train=   1  val=   0
+    fibrotic band                             train=  38  val=  11
+    flattened diaphragm                       train=   1  val=   1
+    goiter                                    train=  15  val=   5
+    ground glass pattern                      train=   7  val=   0
+    gynecomastia                              train=  10  val=   2
+    heart insufficiency                       train=  13  val=   1
+    hemidiaphragm elevation                   train=  81  val=  23
+    hiatal hernia                             train=  81  val=  20
+    hilar congestion                          train=   2  val=   1
+    humeral fracture                          train=   0  val=   2
+    hydropneumothorax                         train=   1  val=   0
+    hypoexpansion basal                       train=   5  val=   2
+    interstitial pattern                      train=  93  val=  18
+    lobar atelectasis                         train=   3  val=   1
+    major fissure thickening                  train=   1  val=   0
+    mediastinal enlargement                   train=   8  val=   1
+    mediastinal mass                          train=   4  val=   0
+    mediastinic lipomatosis                   train=  18  val=   4
+    miliary opacities                         train=   4  val=   4
+    minor fissure thickening                  train=   7  val=   0
+    multiple nodules                          train=   1  val=   1
+    obesity                                   train=   1  val=   0
+    osteopenia                                train=   1  val=   1
+    pectum carinatum                          train=   7  val=   2
+    pleural plaques                           train=   1  val=   0
+    pleural thickening                        train=  11  val=   0
+    pneumoperitoneo                           train=   1  val=   0
+    pneumothorax                              train=  10  val=   7
+    prosthesis                                train=   1  val=   0
+    pulmonary artery enlargement              train=   9  val=   1
+    pulmonary edema                           train=  12  val=   2
+    pulmonary fibrosis                        train=  24  val=   4
+    pulmonary hypertension                    train=   1  val=   0
+    pulmonary mass                            train=  30  val=  11
+    respiratory distress                      train=   2  val=   1
+    reticular interstitial pattern            train=  32  val=   8
+    reticulonodular interstitial pattern      train=   9  val=   0
+    segmental atelectasis                     train=   1  val=   0
+    soft tissue mass                          train=   2  val=   1
+    subacromial space narrowing               train=   0  val=   1
+    subcutaneous emphysema                    train=   3  val=   0
+    superior mediastinal enlargement          train=   6  val=   4
+    thoracic cage deformation                 train=  12  val=   2
+    tracheal shift                            train=   6  val=   1
+    tuberculosis                              train=   7  val=   1
+    tuberculosis sequelae                     train=   6  val=   1
+    vascular redistribution                   train=   1  val=   0
+    vertebral fracture                        train=   1  val=   1
+Rare disease classes (10): ['bronchiectasis', 'calcified granuloma', 'callus rib fracture', 'fibrotic band', 'hemidiaphragm elevation', 'hiatal hernia', 'interstitial pattern', 'pulmonary fibrosis', 'pulmonary mass', 'reticular interstitial pattern']
+Loading negative pool...
+  Negative pool: 5000 train  2000 val
+
+────────────────────────────────────────────────────────────
+Init: SSL pretrained
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.571±0.108        0.567±0.105        0.591±0.121        0.589±0.100        0.659±0.085      
+  calcified granuloma                         0.525±0.071        0.524±0.059        0.509±0.054        0.524±0.053        0.519±0.058      
+  callus rib fracture                         0.574±0.076        0.551±0.072        0.536±0.071        0.611±0.086        0.511±0.097      
+  fibrotic band                               0.550±0.081        0.550±0.045        0.565±0.096        0.550±0.090        0.582±0.068      
+  hemidiaphragm elevation                     0.641±0.100        0.741±0.076        0.751±0.059        0.804±0.081        0.839±0.040      
+  hiatal hernia                               0.749±0.159        0.827±0.073        0.877±0.038        0.884±0.045        0.910±0.037      
+  interstitial pattern                        0.595±0.118        0.552±0.152        0.536±0.190        0.674±0.162        0.690±0.072      
+  pulmonary fibrosis                          0.869±0.186        0.938±0.084        0.963±0.075        0.994±0.019        1.000±0.000      
+  pulmonary mass                              0.650±0.142        0.687±0.070        0.789±0.083        0.792±0.097        0.850±0.051      
+  reticular interstitial pattern              0.516±0.158        0.592±0.172        0.548±0.194        0.709±0.160        0.755±0.155      
+
+────────────────────────────────────────────────────────────
+Init: ImageNet
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.481±0.133        0.532±0.104        0.559±0.164        0.547±0.088        0.526±0.082      
+  calcified granuloma                         0.495±0.060        0.503±0.067        0.487±0.076        0.560±0.065        0.494±0.090      
+  callus rib fracture                         0.493±0.086        0.513±0.053        0.550±0.096        0.553±0.067        0.469±0.065      
+  fibrotic band                               0.479±0.087        0.540±0.086        0.481±0.080        0.571±0.103        0.589±0.086      
+  hemidiaphragm elevation                     0.555±0.075        0.686±0.096        0.709±0.061        0.765±0.062        0.814±0.057      
+  hiatal hernia                               0.592±0.213        0.850±0.078        0.807±0.075        0.871±0.039        0.882±0.039      
+  interstitial pattern                        0.436±0.079        0.519±0.107        0.563±0.133        0.683±0.103        0.680±0.080      
+  pulmonary fibrosis                          0.581±0.237        0.819±0.106        0.944±0.113        0.963±0.064        0.956±0.063      
+  pulmonary mass                              0.507±0.109        0.560±0.109        0.536±0.078        0.586±0.073        0.632±0.106      
+  reticular interstitial pattern              0.489±0.126        0.527±0.156        0.559±0.109        0.622±0.068        0.647±0.088      
+
+────────────────────────────────────────────────────────────
+Init: Random init
+────────────────────────────────────────────────────────────
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.540±0.100        0.543±0.097        0.520±0.115        0.511±0.114        0.505±0.114      
+  calcified granuloma                         0.526±0.039        0.511±0.037        0.524±0.049        0.505±0.073        0.535±0.057      
+  callus rib fracture                         0.531±0.057        0.496±0.064        0.527±0.074        0.490±0.079        0.491±0.072      
+  fibrotic band                               0.500±0.117        0.525±0.079        0.550±0.109        0.477±0.089        0.465±0.125      
+  hemidiaphragm elevation                     0.560±0.114        0.601±0.122        0.589±0.105        0.661±0.107        0.756±0.052      
+  hiatal hernia                               0.561±0.110        0.560±0.126        0.638±0.063        0.705±0.063        0.768±0.044      
+  interstitial pattern                        0.517±0.053        0.532±0.067        0.538±0.085        0.573±0.093        0.560±0.114      
+  pulmonary fibrosis                          0.531±0.184        0.656±0.261        0.694±0.214        0.700±0.191        0.762±0.153      
+  pulmonary mass                              0.552±0.043        0.514±0.044        0.536±0.107        0.545±0.072        0.544±0.085      
+  reticular interstitial pattern              0.427±0.095        0.573±0.134        0.475±0.127        0.556±0.143        0.509±0.130      
+
+Significance tests — probe (paired t-test on AUC, 10 trials)
+    1-shot  SSL vs ImageNet       : t=+4.63  p=0.001  **
+    5-shot  SSL vs ImageNet       : t=+3.28  p=0.010  **
+   10-shot  SSL vs ImageNet       : t=+1.84  p=0.098  ns
+   20-shot  SSL vs ImageNet       : t=+1.88  p=0.093  ns
+   50-shot  SSL vs ImageNet       : t=+2.84  p=0.019  *
+    1-shot  SSL vs Random init    : t=+3.21  p=0.011  *
+    5-shot  SSL vs Random init    : t=+3.02  p=0.014  *
+   10-shot  SSL vs Random init    : t=+3.01  p=0.015  *
+   20-shot  SSL vs Random init    : t=+5.38  p=0.000  **
+   50-shot  SSL vs Random init    : t=+4.46  p=0.002  **
+Saved plot to barlow_ep191_probe_binary.png
+Saved per-disease plot to barlow_ep191_probe_per_disease.png
+OK: probe outputs_cloud/barlow/best.pt
+
+--- probe: outputs_cloud/spark/best.pt ---
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/ryan/.netrc.
+wandb: Currently logged in as: ryanzhou147 (ryanzhou147-none) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.25.0
+wandb: Run data is saved locally in /home/ryan/Downloads/CMVR/wandb/run-20260324_185743-clhvvv76
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Resuming run spark_ep199_finetune
+wandb: ⭐️ View project at https://wandb.ai/ryanzhou147-none/cmvr-finetune
+wandb: 🚀 View run at https://wandb.ai/ryanzhou147-none/cmvr-finetune/runs/clhvvv76
+nohup: ignoring input
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/ryan/.netrc.
+wandb: Currently logged in as: ryanzhou147 (ryanzhou147-none) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run clhvvv76
+wandb: Tracking run with wandb version 0.25.0
+wandb: Run data is saved locally in /home/ryan/Downloads/CMVR/wandb/run-20260325_090633-clhvvv76
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Resuming run spark_ep199_finetune
+wandb: ⭐️ View project at https://wandb.ai/ryanzhou147-none/cmvr-finetune
+wandb: 🚀 View run at https://wandb.ai/ryanzhou147-none/cmvr-finetune/runs/clhvvv76
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/ryan/.netrc.
+wandb: Currently logged in as: ryanzhou147 (ryanzhou147-none) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run clhvvv76
+wandb: Tracking run with wandb version 0.25.0
+wandb: Run data is saved locally in /home/ryan/Downloads/CMVR/wandb/run-20260325_090647-clhvvv76
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Resuming run spark_ep199_finetune
+wandb: ⭐️ View project at https://wandb.ai/ryanzhou147-none/cmvr-finetune
+wandb: 🚀 View run at https://wandb.ai/ryanzhou147-none/cmvr-finetune/runs/clhvvv76
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/ryan/.netrc.
+wandb: Currently logged in as: ryanzhou147 (ryanzhou147-none) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run clhvvv76
+wandb: Tracking run with wandb version 0.25.0
+wandb: Run data is saved locally in /home/ryan/Downloads/CMVR/wandb/run-20260325_103100-clhvvv76
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Resuming run spark_ep199_finetune
+wandb: ⭐️ View project at https://wandb.ai/ryanzhou147-none/cmvr-finetune
+wandb: 🚀 View run at https://wandb.ai/ryanzhou147-none/cmvr-finetune/runs/clhvvv76
+wandb: uploading artifact run-clhvvv76-results_table; updating run metadata
+wandb: uploading artifact run-clhvvv76-results_table; updating run metadata; uploading history steps 1655-1657, summary, console lines 160-185
+wandb: uploading artifact run-clhvvv76-results_table; uploading history steps 1655-1657, summary, console lines 160-185
+wandb: uploading history steps 1655-1657, summary, console lines 160-185
+wandb: uploading data
+wandb: 
+wandb: Run history:
+wandb: mean/Random init/hemidiaphragm elevation/50shot/auc ▁
+wandb:  mean/Random init/hemidiaphragm elevation/50shot/f1 ▁
+wandb:           mean/Random init/hiatal hernia/10shot/auc ▁
+wandb:            mean/Random init/hiatal hernia/10shot/f1 ▁
+wandb:            mean/Random init/hiatal hernia/1shot/auc ▁
+wandb:             mean/Random init/hiatal hernia/1shot/f1 ▁
+wandb:           mean/Random init/hiatal hernia/20shot/auc ▁
+wandb:            mean/Random init/hiatal hernia/20shot/f1 ▁
+wandb:           mean/Random init/hiatal hernia/50shot/auc ▁
+wandb:            mean/Random init/hiatal hernia/50shot/f1 ▁
+wandb:                                                 +94 ...
+wandb: 
+wandb: Run summary:
+wandb: mean/ImageNet/bronchiectasis/10shot/auc 0.612
+wandb:  mean/ImageNet/bronchiectasis/10shot/f1 0.43467
+wandb:  mean/ImageNet/bronchiectasis/1shot/auc 0.581
+wandb:   mean/ImageNet/bronchiectasis/1shot/f1 0.42885
+wandb: mean/ImageNet/bronchiectasis/20shot/auc 0.4925
+wandb:  mean/ImageNet/bronchiectasis/20shot/f1 0.2
+wandb: mean/ImageNet/bronchiectasis/50shot/auc 0.501
+wandb:  mean/ImageNet/bronchiectasis/50shot/f1 0.42857
+wandb:  mean/ImageNet/bronchiectasis/5shot/auc 0.607
+wandb:   mean/ImageNet/bronchiectasis/5shot/f1 0.43412
+wandb:                                    +590 ...
+wandb: 
+wandb: 🚀 View run spark_ep199_finetune at: https://wandb.ai/ryanzhou147-none/cmvr-finetune/runs/clhvvv76
+wandb: ⭐️ View project at: https://wandb.ai/ryanzhou147-none/cmvr-finetune
+wandb: Synced 5 W&B file(s), 3 media file(s), 2 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20260325_103100-clhvvv76/logs
+Loading checkpoint from outputs_cloud/spark/best.pt...
+  Method: spark  epoch: 199  device: cuda
+Loading PadChest rare disease splits...
+  Images on disk: 58337
+  Found 74 unique labels across 1076 patients
+  Label counts (train / val):
+    abnormal foreign body                     train=   4  val=   0
+    adenopathy                                train=   8  val=   1
+    air bronchogram                           train=   0  val=   1
+    alveolar pattern                          train=  14  val=   7
+    atypical pneumonia                        train=   2  val=   2
+    azygoesophageal recess shift              train=   1  val=   0
+    bone metastasis                           train=   3  val=   0
+    bronchiectasis                            train=  40  val=  10
+    bullas                                    train=   1  val=   0
+    calcified adenopathy                      train=  13  val=   4
+    calcified fibroadenoma                    train=   0  val=   1
+    calcified granuloma                       train=  96  val=  27
+    calcified mediastinal adenopathy          train=   1  val=   0
+    calcified pleural plaques                 train=   2  val=   0
+    calcified pleural thickening              train=   7  val=   1
+    callus rib fracture                       train=  88  val=  21
+    catheter                                  train=   0  val=   1
+    cavitation                                train=   4  val=   1
+    central vascular redistribution           train=   1  val=   2
+    cervical rib                              train=  12  val=   0
+    clavicle fracture                         train=  15  val=   3
+    costochondral junction hypertrophy        train=   6  val=   1
+    cyst                                      train=   1  val=   0
+    dextrocardia                              train=   1  val=   0
+    double j stent                            train=   2  val=   0
+    external foreign body                     train=   1  val=   0
+    fibrotic band                             train=  38  val=  11
+    flattened diaphragm                       train=   1  val=   1
+    goiter                                    train=  15  val=   5
+    ground glass pattern                      train=   7  val=   0
+    gynecomastia                              train=  10  val=   2
+    heart insufficiency                       train=  13  val=   1
+    hemidiaphragm elevation                   train=  81  val=  23
+    hiatal hernia                             train=  81  val=  20
+    hilar congestion                          train=   2  val=   1
+    humeral fracture                          train=   0  val=   2
+    hydropneumothorax                         train=   1  val=   0
+    hypoexpansion basal                       train=   5  val=   2
+    interstitial pattern                      train=  93  val=  18
+    lobar atelectasis                         train=   3  val=   1
+    major fissure thickening                  train=   1  val=   0
+    mediastinal enlargement                   train=   8  val=   1
+    mediastinal mass                          train=   4  val=   0
+    mediastinic lipomatosis                   train=  18  val=   4
+    miliary opacities                         train=   4  val=   4
+    minor fissure thickening                  train=   7  val=   0
+    multiple nodules                          train=   1  val=   1
+    obesity                                   train=   1  val=   0
+    osteopenia                                train=   1  val=   1
+    pectum carinatum                          train=   7  val=   2
+    pleural plaques                           train=   1  val=   0
+    pleural thickening                        train=  11  val=   0
+    pneumoperitoneo                           train=   1  val=   0
+    pneumothorax                              train=  10  val=   7
+    prosthesis                                train=   1  val=   0
+    pulmonary artery enlargement              train=   9  val=   1
+    pulmonary edema                           train=  12  val=   2
+    pulmonary fibrosis                        train=  24  val=   4
+    pulmonary hypertension                    train=   1  val=   0
+    pulmonary mass                            train=  30  val=  11
+    respiratory distress                      train=   2  val=   1
+    reticular interstitial pattern            train=  32  val=   8
+    reticulonodular interstitial pattern      train=   9  val=   0
+    segmental atelectasis                     train=   1  val=   0
+    soft tissue mass                          train=   2  val=   1
+    subacromial space narrowing               train=   0  val=   1
+    subcutaneous emphysema                    train=   3  val=   0
+    superior mediastinal enlargement          train=   6  val=   4
+    thoracic cage deformation                 train=  12  val=   2
+    tracheal shift                            train=   6  val=   1
+    tuberculosis                              train=   7  val=   1
+    tuberculosis sequelae                     train=   6  val=   1
+    vascular redistribution                   train=   1  val=   0
+    vertebral fracture                        train=   1  val=   1
+Rare disease classes (10): ['bronchiectasis', 'calcified granuloma', 'callus rib fracture', 'fibrotic band', 'hemidiaphragm elevation', 'hiatal hernia', 'interstitial pattern', 'pulmonary fibrosis', 'pulmonary mass', 'reticular interstitial pattern']
+Loading negative pool...
+  Negative pool: 5000 train  2000 val
+Resuming from spark_ep199_finetune_state.json (124 disease×n pairs complete)
+
+────────────────────────────────────────────────────────────
+Init: SSL pretrained
+────────────────────────────────────────────────────────────
+  skip  bronchiectasis  n=1
+  skip  bronchiectasis  n=5
+  skip  bronchiectasis  n=10
+  skip  bronchiectasis  n=20
+  skip  bronchiectasis  n=50
+  skip  calcified granuloma  n=1
+  skip  calcified granuloma  n=5
+  skip  calcified granuloma  n=10
+  skip  calcified granuloma  n=20
+  skip  calcified granuloma  n=50
+  skip  callus rib fracture  n=1
+  skip  callus rib fracture  n=5
+  skip  callus rib fracture  n=10
+  skip  callus rib fracture  n=20
+  skip  callus rib fracture  n=50
+  skip  fibrotic band  n=1
+  skip  fibrotic band  n=5
+  skip  fibrotic band  n=10
+  skip  fibrotic band  n=20
+  skip  fibrotic band  n=50
+  skip  hemidiaphragm elevation  n=1
+  skip  hemidiaphragm elevation  n=5
+  skip  hemidiaphragm elevation  n=10
+  skip  hemidiaphragm elevation  n=20
+  skip  hemidiaphragm elevation  n=50
+  skip  hiatal hernia  n=1
+  skip  hiatal hernia  n=5
+  skip  hiatal hernia  n=10
+  skip  hiatal hernia  n=20
+  skip  hiatal hernia  n=50
+  skip  interstitial pattern  n=1
+  skip  interstitial pattern  n=5
+  skip  interstitial pattern  n=10
+  skip  interstitial pattern  n=20
+  skip  interstitial pattern  n=50
+  skip  pulmonary fibrosis  n=1
+  skip  pulmonary fibrosis  n=5
+  skip  pulmonary fibrosis  n=10
+  skip  pulmonary fibrosis  n=20
+  skip  pulmonary fibrosis  n=50
+  skip  pulmonary mass  n=1
+  skip  pulmonary mass  n=5
+  skip  pulmonary mass  n=10
+  skip  pulmonary mass  n=20
+  skip  pulmonary mass  n=50
+  skip  reticular interstitial pattern  n=1
+  skip  reticular interstitial pattern  n=5
+  skip  reticular interstitial pattern  n=10
+  skip  reticular interstitial pattern  n=20
+  skip  reticular interstitial pattern  n=50
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.582±0.138        0.602±0.105        0.628±0.119        0.581±0.099        0.676±0.115      
+  calcified granuloma                         0.528±0.036        0.495±0.065        0.497±0.039        0.521±0.082        0.507±0.043      
+  callus rib fracture                         0.524±0.078        0.521±0.078        0.518±0.098        0.548±0.096        0.484±0.069      
+  fibrotic band                               0.487±0.092        0.495±0.083        0.491±0.074        0.454±0.106        0.495±0.088      
+  hemidiaphragm elevation                     0.632±0.098        0.758±0.100        0.798±0.062        0.835±0.056        0.866±0.090      
+  hiatal hernia                               0.728±0.146        0.845±0.073        0.873±0.047        0.905±0.038        0.882±0.080      
+  interstitial pattern                        0.547±0.119        0.580±0.139        0.610±0.173        0.665±0.145        0.614±0.128      
+  pulmonary fibrosis                          0.931±0.144        0.931±0.186        1.000±0.000        0.994±0.019        1.000±0.000      
+  pulmonary mass                              0.588±0.153        0.704±0.114        0.783±0.058        0.778±0.083        0.879±0.078      
+  reticular interstitial pattern              0.527±0.116        0.566±0.145        0.545±0.201        0.589±0.111        0.733±0.114      
+
+────────────────────────────────────────────────────────────
+Init: ImageNet
+────────────────────────────────────────────────────────────
+  skip  bronchiectasis  n=1
+  skip  bronchiectasis  n=5
+  skip  bronchiectasis  n=10
+  skip  bronchiectasis  n=20
+  skip  bronchiectasis  n=50
+  skip  calcified granuloma  n=1
+  skip  calcified granuloma  n=5
+  skip  calcified granuloma  n=10
+  skip  calcified granuloma  n=20
+  skip  calcified granuloma  n=50
+  skip  callus rib fracture  n=1
+  skip  callus rib fracture  n=5
+  skip  callus rib fracture  n=10
+  skip  callus rib fracture  n=20
+  skip  callus rib fracture  n=50
+  skip  fibrotic band  n=1
+  skip  fibrotic band  n=5
+  skip  fibrotic band  n=10
+  skip  fibrotic band  n=20
+  skip  fibrotic band  n=50
+  skip  hemidiaphragm elevation  n=1
+  skip  hemidiaphragm elevation  n=5
+  skip  hemidiaphragm elevation  n=10
+  skip  hemidiaphragm elevation  n=20
+  skip  hemidiaphragm elevation  n=50
+  skip  hiatal hernia  n=1
+  skip  hiatal hernia  n=5
+  skip  hiatal hernia  n=10
+  skip  hiatal hernia  n=20
+  skip  hiatal hernia  n=50
+  skip  interstitial pattern  n=1
+  skip  interstitial pattern  n=5
+  skip  interstitial pattern  n=10
+  skip  interstitial pattern  n=20
+  skip  interstitial pattern  n=50
+  skip  pulmonary fibrosis  n=1
+  skip  pulmonary fibrosis  n=5
+  skip  pulmonary fibrosis  n=10
+  skip  pulmonary fibrosis  n=20
+  skip  pulmonary fibrosis  n=50
+  skip  pulmonary mass  n=1
+  skip  pulmonary mass  n=5
+  skip  pulmonary mass  n=10
+  skip  pulmonary mass  n=20
+  skip  pulmonary mass  n=50
+  skip  reticular interstitial pattern  n=1
+  skip  reticular interstitial pattern  n=5
+  skip  reticular interstitial pattern  n=10
+  skip  reticular interstitial pattern  n=20
+  skip  reticular interstitial pattern  n=50
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.581±0.157        0.607±0.116        0.612±0.165        0.492±0.122        0.501±0.104      
+  calcified granuloma                         0.557±0.057        0.500±0.066        0.519±0.054        0.535±0.064        0.476±0.040      
+  callus rib fracture                         0.528±0.078        0.479±0.104        0.502±0.068        0.543±0.078        0.572±0.048      
+  fibrotic band                               0.514±0.103        0.440±0.067        0.486±0.087        0.462±0.095        0.436±0.121      
+  hemidiaphragm elevation                     0.601±0.134        0.742±0.103        0.750±0.113        0.706±0.116        0.667±0.122      
+  hiatal hernia                               0.654±0.087        0.855±0.084        0.842±0.114        0.766±0.080        0.747±0.091      
+  interstitial pattern                        0.537±0.091        0.519±0.098        0.624±0.142        0.603±0.105        0.600±0.127      
+  pulmonary fibrosis                          0.731±0.242        0.969±0.058        1.000±0.000        0.988±0.037        0.963±0.113      
+  pulmonary mass                              0.603±0.093        0.644±0.108        0.636±0.123        0.601±0.097        0.644±0.114      
+  reticular interstitial pattern              0.537±0.122        0.595±0.132        0.600±0.177        0.619±0.094        0.689±0.152      
+
+────────────────────────────────────────────────────────────
+Init: Random init
+────────────────────────────────────────────────────────────
+  skip  bronchiectasis  n=1
+  skip  bronchiectasis  n=5
+  skip  bronchiectasis  n=10
+  skip  bronchiectasis  n=20
+  skip  bronchiectasis  n=50
+  skip  calcified granuloma  n=1
+  skip  calcified granuloma  n=5
+  skip  calcified granuloma  n=10
+  skip  calcified granuloma  n=20
+  skip  calcified granuloma  n=50
+  skip  callus rib fracture  n=1
+  skip  callus rib fracture  n=5
+  skip  callus rib fracture  n=10
+  skip  callus rib fracture  n=20
+  skip  callus rib fracture  n=50
+  skip  fibrotic band  n=1
+  skip  fibrotic band  n=5
+  skip  fibrotic band  n=10
+  skip  fibrotic band  n=20
+  skip  fibrotic band  n=50
+  skip  hemidiaphragm elevation  n=1
+  skip  hemidiaphragm elevation  n=5
+  skip  hemidiaphragm elevation  n=10
+  skip  hemidiaphragm elevation  n=20
+
+  Disease                                         1-shot AUC      5-shot AUC     10-shot AUC     20-shot AUC     50-shot AUC
+  bronchiectasis                              0.538±0.072        0.495±0.075        0.528±0.111        0.508±0.081        0.502±0.115      
+  calcified granuloma                         0.506±0.032        0.478±0.041        0.471±0.067        0.516±0.065        0.490±0.072      
+  callus rib fracture                         0.522±0.094        0.473±0.109        0.531±0.080        0.547±0.064        0.505±0.110      
+  fibrotic band                               0.555±0.099        0.519±0.114        0.529±0.079        0.552±0.086        0.579±0.099      
+  hemidiaphragm elevation                     0.543±0.145        0.584±0.066        0.685±0.101        0.671±0.121        0.807±0.033      
+  hiatal hernia                               0.583±0.105        0.595±0.099        0.594±0.093        0.631±0.126        0.729±0.072      
+  interstitial pattern                        0.480±0.085        0.522±0.112        0.577±0.080        0.524±0.080        0.517±0.057      
+  pulmonary fibrosis                          0.600±0.198        0.444±0.280        0.606±0.211        0.662±0.190        0.762±0.083      
+  pulmonary mass                              0.546±0.070        0.461±0.068        0.523±0.120        0.513±0.103        0.545±0.112      
+  reticular interstitial pattern              0.497±0.119        0.516±0.099        0.438±0.091        0.575±0.097        0.520±0.133      
+
+Significance tests — paired t-test on AUC, 10 trials
+    1-shot  SSL vs ImageNet       : t=+1.05  p=0.323  ns
+    5-shot  SSL vs ImageNet       : t=+1.24  p=0.246  ns
+   10-shot  SSL vs ImageNet       : t=+1.02  p=0.335  ns
+   20-shot  SSL vs ImageNet       : t=+2.37  p=0.042  *
+   50-shot  SSL vs ImageNet       : t=+2.68  p=0.025  *
+    1-shot  SSL vs Random init    : t=+2.07  p=0.068  ns
+    5-shot  SSL vs Random init    : t=+2.92  p=0.017  *
+   10-shot  SSL vs Random init    : t=+2.83  p=0.020  *
+   20-shot  SSL vs Random init    : t=+2.61  p=0.028  *
+   50-shot  SSL vs Random init    : t=+2.91  p=0.017  *
+Saved plot to spark_ep199_finetune_binary.png
+Saved per-disease plot to spark_ep199_finetune_per_disease.png
