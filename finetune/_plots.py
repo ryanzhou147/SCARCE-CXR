@@ -4,7 +4,9 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-from finetune._data import COLORS
+from finetune._data import COLORS, PLOT_RC
+
+plt.rcParams.update(PLOT_RC)
 
 
 def plot_mean_auc(

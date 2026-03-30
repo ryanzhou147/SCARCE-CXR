@@ -24,9 +24,43 @@ MIN_TRAIN_PER_CLASS = 15  # need enough to support up to 20-shot sampling
 FORCE_INCLUDE = {"pulmonary fibrosis"}
 
 COLORS = {
-    "SSL pretrained": "#2196F3",
-    "ImageNet": "#4CAF50",
-    "Random init": "#FF5722",
+    "SSL pretrained": "#6b8cba",
+    "ImageNet":       "#7faa8e",
+    "Random init":    "#c47b7b",
+}
+
+# Clean minimal plot theme — apply once per script with plt.rcParams.update(PLOT_RC)
+PLOT_RC: dict = {
+    "figure.facecolor":      "#f4f3ef",
+    "axes.facecolor":        "#ffffff",
+    "axes.edgecolor":        "#d0cec8",
+    "axes.labelcolor":       "#555555",
+    "axes.titlecolor":       "#333333",
+    "axes.titlesize":        13,
+    "axes.labelsize":        11,
+    "axes.grid":             True,
+    "grid.color":            "#e8e6e0",
+    "grid.linewidth":        0.7,
+    "grid.linestyle":        "--",
+    "xtick.color":           "#888888",
+    "ytick.color":           "#888888",
+    "xtick.labelsize":       9,
+    "ytick.labelsize":       9,
+    "text.color":            "#555555",
+    "legend.facecolor":      "#ffffff",
+    "legend.edgecolor":      "#d0cec8",
+    "legend.labelcolor":     "#555555",
+    "legend.fontsize":       9,
+    "savefig.facecolor":     "#f4f3ef",
+    "savefig.edgecolor":     "#f4f3ef",
+    "axes.spines.top":       False,
+    "axes.spines.right":     False,
+    "axes.spines.left":      True,
+    "axes.spines.bottom":    True,
+    "lines.linewidth":       1.8,
+    "lines.markersize":      5,
+    "font.family":           "sans-serif",
+    "figure.dpi":            150,
 }
 
 EXCLUDE_LABELS = {
