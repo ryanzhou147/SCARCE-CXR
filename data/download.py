@@ -17,15 +17,19 @@ def _resize_and_save(data: bytes, out_path: Path, size: int) -> None:
     import numpy as np
     from PIL import Image
 
-    img = Image.open(io.BytesIO(data)).convert("L")
-    img = img.resize((size, size), Image.LANCZOS)
+    img = Image.open(io.BytesIO(data))
     arr = np.array(img, dtype=np.float32)
     lo, hi = arr.min(), arr.max()
-    # PadChest ships as 16-bit and may not use the full range
+    # Normalize BEFORE quantizing to 8-bit. PadChest is 16-bit and rarely uses the
+    # full 0–65535 range. convert("L") first would divide by 256, collapsing a
+    # 4200–18500 range to only ~56 distinct gray levels before normalization.
+    # Normalizing on the raw values first preserves full 8-bit precision.
     if hi > lo:
         arr = (arr - lo) / (hi - lo) * 255
+    img_8bit = Image.fromarray(arr.astype("uint8"), mode="L")
+    img_8bit = img_8bit.resize((size, size), Image.LANCZOS)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    Image.fromarray(arr.astype("uint8"), mode="L").save(out_path, format="PNG")
+    img_8bit.save(out_path, format="PNG")
 
 
 def _extract_and_resize(zip_path: Path, dest: Path, size: int) -> int:
