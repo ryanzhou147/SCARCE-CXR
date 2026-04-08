@@ -124,8 +124,8 @@ def main() -> None:
         print(f"std={std:.3f}  mean_cos={cos:.3f}  eff_rank={eff_rank:.1f}")
 
     _PLOT_RC = {
-        "figure.facecolor":   "#f4f3ef",
-        "axes.facecolor":     "#ffffff",
+        "figure.facecolor":   "white",
+        "axes.facecolor":     "white",
         "axes.edgecolor":     "#d0cec8",
         "axes.labelcolor":    "#555555",
         "axes.titlecolor":    "#333333",
@@ -140,7 +140,7 @@ def main() -> None:
         "xtick.labelsize":    9,
         "ytick.labelsize":    9,
         "text.color":         "#555555",
-        "savefig.facecolor":  "#f4f3ef",
+        "savefig.facecolor":  "white",
         "axes.spines.top":    False,
         "axes.spines.right":  False,
         "lines.linewidth":    1.8,
@@ -159,7 +159,7 @@ def main() -> None:
     axes[2].set_xlabel("Epoch")
     latest = outputs_dir / "latest.pt"
     run = method_name(torch.load(latest, map_location="cpu", weights_only=False)) if latest.exists() else outputs_dir.name
-    axes[0].set_title(f"Collapse monitor — {run}", pad=10)
+    axes[0].set_title(f"Collapse monitor: {run}", pad=10)
     plt.tight_layout()
 
     out = Path(f"{run}_collapse.png")

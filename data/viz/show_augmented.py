@@ -70,8 +70,9 @@ def show_dino(config: dict, paths: list[Path], out_path: Path) -> None:
         + [f"Local {i + 1}" for i in range(n_local)]
     )
     n_cols = len(col_labels)
-    fig, axes = plt.subplots(len(paths), n_cols, figsize=(n_cols * 2, len(paths) * 2))
-    fig.suptitle("DINO Multi-Crop Augmented Views", fontsize=14, y=1.01)
+    paths = paths[:4]
+    fig, axes = plt.subplots(len(paths), n_cols, figsize=(n_cols * 1.5, len(paths) * 1.8))
+    fig.suptitle("DINO Multi-Crop Augmented Views", fontsize=13, y=1.02)
 
     for r, path in enumerate(paths):
         img = Image.open(path).convert("RGB")
@@ -83,10 +84,10 @@ def show_dino(config: dict, paths: list[Path], out_path: Path) -> None:
         for c, ax in enumerate(axrow):
             ax.axis("off")
             if r == 0:
-                ax.set_title(col_labels[c], fontsize=9)
+                ax.set_title(col_labels[c], fontsize=11)
 
     plt.tight_layout()
-    plt.savefig(out_path, dpi=100, bbox_inches="tight")
+    plt.savefig(out_path, dpi=150, bbox_inches="tight")
     print(f"Saved grid to {out_path}")
     plt.show()
 
