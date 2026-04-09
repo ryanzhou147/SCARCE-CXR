@@ -32,6 +32,7 @@ if __name__ == "__main__":
     parser.add_argument("--checkpoint", required=True)
     parser.add_argument("--data-dir", default="datasets/nih-chest-xrays")
     parser.add_argument("--n-images", type=int, default=6)
+    parser.add_argument("--sample-index", type=int, default=None, help="Pick one specific image by index (overrides --n-images)")
     parser.add_argument("--output", default="spark_reconstructions.png")
     args = parser.parse_args()
 
@@ -56,7 +57,11 @@ if __name__ == "__main__":
     print(f"  Checkpoint epoch: {ckpt.get('epoch', '?')}")
 
     paths = collect_image_paths("nih", args.data_dir)
-    paths = random.sample(paths, min(args.n_images, len(paths)))
+    paths = random.sample(paths, min(100, len(paths)))  # sample pool
+    if args.sample_index is not None:
+        paths = [paths[args.sample_index]]
+    else:
+        paths = paths[:args.n_images]
 
     size = config["data"]["image_size"]
     transform = transforms.Compose([
@@ -77,12 +82,11 @@ if __name__ == "__main__":
     mask_px = mask_px.cpu()
 
     n = len(paths)
-    fig, axes = plt.subplots(n, 4, figsize=(12, 3 * n))
+    fig, axes = plt.subplots(n, 2, figsize=(6, 3 * n))
     if n == 1:
         axes = axes[None]
 
-    col_titles = ["Original", f"Masked ({int(sp_cfg['mask_ratio']*100)}%)", "Reconstruction", "Composite"]
-    for col, title in enumerate(col_titles):
+    for col, title in enumerate(["Original", "Composite"]):
         axes[0, col].set_title(title, fontsize=11, fontweight="bold")
 
     for i in range(n):
@@ -99,7 +103,7 @@ if __name__ == "__main__":
         global_std  = float(vis_pixels.std())  if vis_pixels.size > 0 else float(orig_full.std())
         global_std  = max(global_std, 1e-8)
 
-        pred_gray    = pred[i].mean(0).numpy()
+        pred_gray     = pred[i].mean(0).numpy()
         recon_display = (pred_gray * global_std + global_mean).clip(0, 1)
 
         # Feather mask edges for composite
@@ -107,12 +111,7 @@ if __name__ == "__main__":
         soft_mask    = gaussian_filter(mask.astype(np.float32), sigma=3.0)
         composite    = orig_full * (1 - soft_mask) + recon_smooth * soft_mask
 
-        for col, display_img in enumerate([
-            orig_full,
-            orig_full * (1 - mask),
-            recon_smooth,
-            composite,
-        ]):
+        for col, display_img in enumerate([orig_full, composite]):
             axes[i, col].imshow(display_img, cmap="gray", vmin=0, vmax=1, aspect="auto")
             axes[i, col].axis("off")
 
