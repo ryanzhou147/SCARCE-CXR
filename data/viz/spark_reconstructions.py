@@ -26,11 +26,6 @@ def _denorm(t: torch.Tensor) -> np.ndarray:
     return (t * _STD + _MEAN).clamp(0, 1).mean(0).numpy()
 
 
-def _norm_display(t: torch.Tensor) -> np.ndarray:
-    img = t.mean(0).numpy()
-    lo, hi = img.min(), img.max()
-    return (img - lo) / (hi - lo + 1e-8)
-
 
 if __name__ == "__main__":    
     parser = argparse.ArgumentParser(description="Visualise SparK reconstructions")
@@ -94,16 +89,20 @@ if __name__ == "__main__":
         orig_full = _denorm(imgs[i])
         mask      = mask_px[i, 0].numpy()
 
-        # pred is in patch-normalised space: min-max scale to visible brightness range
-        recon_raw = _norm_display(pred[i])
+        # Denormalise prediction using the global statistics of the visible pixels.
+        # The model predicts in per-patch-normalised space (each patch ~N(0,1)).
+        # Applying a single global mean/std maps all patches to a consistent
+        # brightness reference frame, eliminating inter-patch seams caused by
+        # independent per-patch statistics.
         vis_pixels = orig_full[mask == 0]
-        if vis_pixels.size > 0:
-            vis_lo, vis_hi = vis_pixels.min(), vis_pixels.max()
-            recon_display = (recon_raw * (vis_hi - vis_lo) + vis_lo).clip(0, 1)
-        else:
-            recon_display = recon_raw
+        global_mean = float(vis_pixels.mean()) if vis_pixels.size > 0 else float(orig_full.mean())
+        global_std  = float(vis_pixels.std())  if vis_pixels.size > 0 else float(orig_full.std())
+        global_std  = max(global_std, 1e-8)
 
-        # Smooth boundaries between patches; feather mask edges for composite
+        pred_gray    = pred[i].mean(0).numpy()
+        recon_display = (pred_gray * global_std + global_mean).clip(0, 1)
+
+        # Feather mask edges for composite
         recon_smooth = gaussian_filter(recon_display, sigma=2.0)
         soft_mask    = gaussian_filter(mask.astype(np.float32), sigma=3.0)
         composite    = orig_full * (1 - soft_mask) + recon_smooth * soft_mask
