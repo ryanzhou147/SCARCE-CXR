@@ -8,11 +8,42 @@ import gzip
 import random
 from pathlib import Path
 
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 
 from data.dataloader import collect_image_paths
+
+_STATIC = Path(__file__).parent.parent.parent.parent / "personal-website/portfolio/static/clear-cxr"
+
+_RC = {
+    "figure.facecolor":  "white",
+    "axes.facecolor":    "white",
+    "axes.edgecolor":    "#d0cec8",
+    "axes.labelcolor":   "#555555",
+    "axes.titlecolor":   "#333333",
+    "axes.titlesize":    13,
+    "axes.labelsize":    11,
+    "axes.grid":         True,
+    "grid.color":        "#e8e6e0",
+    "grid.linewidth":    0.7,
+    "grid.linestyle":    "--",
+    "xtick.color":       "#888888",
+    "ytick.color":       "#888888",
+    "xtick.labelsize":   10,
+    "ytick.labelsize":   10,
+    "text.color":        "#555555",
+    "savefig.facecolor": "white",
+    "axes.spines.top":   False,
+    "axes.spines.right": False,
+    "lines.linewidth":   1.8,
+    "font.family":       "sans-serif",
+}
+
+_BLUE = "#6b8cba"
+_RED  = "#c0685c"
 
 
 def _load_gray(path: Path, size: int = 224) -> np.ndarray:
@@ -62,7 +93,7 @@ if __name__ == "__main__":
                         help="Images to show per dataset in the sample grid")
     parser.add_argument("--n-hist", type=int, default=500,
                         help="Images to sample for histogram / statistics")
-    parser.add_argument("--output", default="domain_gap.png")
+    parser.add_argument("--output", default=str(_STATIC / "domain_gap.png"))
     args = parser.parse_args()
 
     print("Collecting image paths...")
@@ -95,33 +126,35 @@ if __name__ == "__main__":
     print(f"  Std ratio:   {std_ratio:.3f}  (1.0=identical)")
 
     n = args.n_samples
-    fig = plt.figure(figsize=(14, 10))
 
-    axes_nih = [fig.add_subplot(2, n * 2, i + 1)     for i in range(n)]
-    axes_pc  = [fig.add_subplot(2, n * 2, n + i + 1) for i in range(n)]
+    with plt.rc_context(_RC):
+        fig = plt.figure(figsize=(12, 8))
 
-    for ax, path in zip(axes_nih, sample_nih):
-        ax.imshow(_load_gray(path), cmap="gray", vmin=0, vmax=1)
-        ax.axis("off")
-    axes_nih[n // 2].set_title("NIH", fontsize=12, fontweight="bold", pad=8)
+        axes_nih = [fig.add_subplot(2, n * 2, i + 1)     for i in range(n)]
+        axes_pc  = [fig.add_subplot(2, n * 2, n + i + 1) for i in range(n)]
 
-    for ax, path in zip(axes_pc, sample_pc):
-        ax.imshow(_load_gray(path), cmap="gray", vmin=0, vmax=1)
-        ax.axis("off")
-    axes_pc[n // 2].set_title("PadChest", fontsize=12, fontweight="bold", pad=8)
+        for ax, path in zip(axes_nih, sample_nih):
+            ax.imshow(_load_gray(path), cmap="gray", vmin=0, vmax=1)
+            ax.axis("off")
+        axes_nih[n // 2].set_title("NIH", fontsize=14, fontweight="bold", pad=8, color="#333333")
 
-    ax_hist = fig.add_subplot(2, 1, 2)
-    ax_hist.hist(nih_pixels, bins=100, alpha=0.6, color="steelblue",
-                 density=True, label=f"NIH  (μ={nih_pixels.mean():.3f}, σ={nih_pixels.std():.3f})")
-    ax_hist.hist(pc_pixels,  bins=100, alpha=0.6, color="tomato",
-                 density=True, label=f"PadChest (μ={pc_pixels.mean():.3f}, σ={pc_pixels.std():.3f})")
-    ax_hist.set_xlabel("Pixel intensity (normalised to [0,1])")
-    ax_hist.set_ylabel("Density")
-    ax_hist.set_title("Pixel intensity distribution — NIH vs PadChest")
-    ax_hist.legend()
+        for ax, path in zip(axes_pc, sample_pc):
+            ax.imshow(_load_gray(path), cmap="gray", vmin=0, vmax=1)
+            ax.axis("off")
+        axes_pc[n // 2].set_title("PadChest", fontsize=14, fontweight="bold", pad=8, color="#333333")
 
-    plt.tight_layout()
-    out = Path(args.output)
-    plt.savefig(out, dpi=150, bbox_inches="tight")
-    print(f"\nSaved to {out}")
-    plt.show()
+        ax_hist = fig.add_subplot(2, 1, 2)
+        ax_hist.hist(nih_pixels, bins=100, alpha=0.6, color=_BLUE,
+                     density=True, label=f"NIH  (mean={nih_pixels.mean():.3f}, std={nih_pixels.std():.3f})")
+        ax_hist.hist(pc_pixels,  bins=100, alpha=0.6, color=_RED,
+                     density=True, label=f"PadChest (mean={pc_pixels.mean():.3f}, std={pc_pixels.std():.3f})")
+        ax_hist.set_xlabel("Pixel intensity (normalised to [0,1])")
+        ax_hist.set_ylabel("Density")
+        ax_hist.set_title("Pixel intensity distribution: NIH vs PadChest")
+        ax_hist.legend(fontsize=10, framealpha=0.92, edgecolor="#d0cec8")
+
+        plt.tight_layout()
+        out = Path(args.output)
+        plt.savefig(out, dpi=150, bbox_inches="tight")
+        print(f"\nSaved to {out}")
+        plt.show()
