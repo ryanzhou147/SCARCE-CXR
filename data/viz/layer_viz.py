@@ -23,6 +23,8 @@ from finetune._data import (
     load_padchest_splits,
 )
 
+METHOD_DISPLAY = {"moco": "MoCo v2", "dino": "DINO", "barlow": "BarlowTwins", "spark": "SparK"}
+
 LAYERS = ["layer1", "layer2", "layer3", "layer4"]
 LAYER_LABELS = {
     "layer1": "layer1\nedges/contrast",
@@ -141,7 +143,7 @@ def main():
         axes = axes[np.newaxis, :]
 
     for j, title in enumerate(["original"] + [LAYER_LABELS[l] for l in LAYERS]):
-        axes[0, j].set_title(title, fontsize=8)
+        axes[0, j].set_title(title, fontsize=11)
 
     for i, path in enumerate(vis_paths):
         img_tensor, original = _load_image(path)
@@ -150,7 +152,7 @@ def main():
         prob = _pred_prob(backbone, coef, intercept, img_tensor.detach())
 
         axes[i, 0].imshow(original, cmap="gray", vmin=0, vmax=1)
-        axes[i, 0].set_ylabel(f"p={prob:.2f}", fontsize=8, rotation=0, labelpad=30)
+        axes[i, 0].set_ylabel(f"p={prob:.2f}", fontsize=11, rotation=0, labelpad=30)
         axes[i, 0].axis("off")
 
         for j, name in enumerate(LAYERS):
@@ -158,13 +160,15 @@ def main():
             axes[i, j + 1].imshow(cams[name], cmap="jet", alpha=0.45, vmin=0, vmax=1)
             axes[i, j + 1].axis("off")
 
-    fig.suptitle(f"Layer-by-layer Grad-CAM — {disease}\n{mname} ep{epoch}", fontsize=11)
-    plt.tight_layout()
+    display_name = METHOD_DISPLAY.get(mname, mname)
+    fig.suptitle(f"Layer-by-layer Grad-CAM: {disease} ({display_name})", fontsize=18, fontweight="bold", color="#333333")
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
 
+    _STATIC = Path(__file__).parent.parent.parent.parent / "personal-website/portfolio/static/clear-cxr"
     out = (
         Path(args.out)
         if args.out
-        else Path(f"{mname}_ep{epoch}_layers_{disease.replace(' ', '_')}.png")
+        else _STATIC / f"layer_gradcam_{mname.replace(' ', '_').lower()}.png"
     )
     plt.savefig(out, dpi=150, bbox_inches="tight")
     print(f"Saved to {out}")

@@ -66,7 +66,7 @@ def _load_image(path: Path) -> tuple[torch.Tensor, np.ndarray]:
 def _overlay(ax, original: np.ndarray, cam: np.ndarray, title: str):
     ax.imshow(original, cmap="gray", vmin=0, vmax=1)
     ax.imshow(cam, cmap="jet", alpha=0.45, vmin=0, vmax=1)
-    ax.set_title(title, fontsize=8)
+    ax.set_title(title, fontsize=11)
     ax.axis("off")
 
 
@@ -88,7 +88,7 @@ def _pred_prob(backbone, coef, intercept, img_tensor):
 
 def _run_comparison(args, device, data_dir, disease):
     checkpoint = torch.load(args.checkpoint, map_location=device, weights_only=False)
-    ssl_label = f"{method_name(checkpoint)} ep{checkpoint['epoch'] + 1}"
+    ssl_label = "(MoCo v2)"
 
     print("Loading backbones...")
     ssl_backbone, _ = load_raw_backbone(checkpoint, device)
@@ -106,8 +106,8 @@ def _run_comparison(args, device, data_dir, disease):
 
     backbones = [
         (ssl_backbone, ssl_label),
-        (imagenet_backbone, "imagenet"),
-        (random_backbone, "random"),
+        (imagenet_backbone, "ImageNet"),
+        (random_backbone, "Random"),
     ]
 
     print("Fitting probes...")
@@ -136,7 +136,7 @@ def _run_comparison(args, device, data_dir, disease):
             header = f"{col_labels[col]}\n" if row == 0 else ""
             _overlay(axes[row, col], original, cam, f"{header}p={prob:.2f}")
 
-    fig.suptitle(f"Grad-CAM Comparison — {disease}", fontsize=12)
+    fig.suptitle(f"Grad-CAM Comparison: {disease}", fontsize=13)
     plt.tight_layout()
     out = Path(f"comparison_gradcam_{disease.replace(' ', '_')}.png")
     plt.savefig(out, dpi=150, bbox_inches="tight")
