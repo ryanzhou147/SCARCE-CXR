@@ -1,0 +1,70 @@
+<svg width="300" height="455" viewBox="0 0 300 455" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    text { font-family: Helvetica, Arial, sans-serif; }
+  </style>
+  <defs>
+    <marker id="ah-gray" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="8" markerHeight="8" orient="auto">
+      <polygon points="0,0 8,4 0,8" fill="#cbd5e1"/>
+    </marker>
+    <marker id="ah-blue" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="8" markerHeight="8" orient="auto">
+      <polygon points="0,0 8,4 0,8" fill="#93c5fd"/>
+    </marker>
+    <marker id="ah-neutral" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="8" markerHeight="8" orient="auto">
+      <polygon points="0,0 8,4 0,8" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="150" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#1e293b">Finetuning</text>
+  <text x="150" y="42" text-anchor="middle" font-size="11" fill="#64748b">MoCo / Barlow: layer2+ unfrozen</text>
+
+  <!-- Conv1 (frozen) -->
+  <rect x="35" y="55" width="210" height="40" rx="5" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="60" y="79" font-size="14" fill="#93c5fd">❄</text>
+  <text x="82" y="80" font-size="13" fill="#64748b">Conv1 + BN</text>
+  <line x1="140" y1="95" x2="140" y2="107" stroke="#cbd5e1" stroke-width="1.5" marker-end="url(#ah-gray)"/>
+
+  <!-- Layer 1 (frozen) -->
+  <rect x="35" y="108" width="210" height="40" rx="5" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="60" y="132" font-size="14" fill="#93c5fd">❄</text>
+  <text x="82" y="133" font-size="13" fill="#64748b">Layer 1</text>
+
+  <!-- Divider line between frozen and unfrozen -->
+  <line x1="35" y1="153" x2="245" y2="153" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <line x1="140" y1="148" x2="140" y2="160" stroke="#93c5fd" stroke-width="1.5" marker-end="url(#ah-blue)"/>
+
+  <!-- Layer 2 (unfrozen) -->
+  <rect x="35" y="161" width="210" height="40" rx="5" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+  <text x="82" y="186" font-size="13" fill="#1d4ed8">Layer 2</text>
+  <line x1="140" y1="201" x2="140" y2="213" stroke="#93c5fd" stroke-width="1.5" marker-end="url(#ah-blue)"/>
+
+  <!-- Layer 3 (unfrozen) -->
+  <rect x="35" y="214" width="210" height="40" rx="5" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+  <text x="82" y="239" font-size="13" fill="#1d4ed8">Layer 3</text>
+  <line x1="140" y1="254" x2="140" y2="266" stroke="#93c5fd" stroke-width="1.5" marker-end="url(#ah-blue)"/>
+
+  <!-- Layer 4 (unfrozen) -->
+  <rect x="35" y="267" width="210" height="40" rx="5" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+  <text x="82" y="292" font-size="13" fill="#1d4ed8">Layer 4</text>
+
+  <!-- Bracket: frozen (y=55 to y=148) -->
+  <polyline points="252,55 261,55 261,148 252,148" stroke="#cbd5e1" stroke-width="1.5" fill="none"/>
+  <text transform="translate(276,101) rotate(90)" text-anchor="middle" font-size="10" fill="#94a3b8">frozen</text>
+
+  <!-- Bracket: unfrozen (y=161 to y=307) -->
+  <polyline points="252,161 261,161 261,307 252,307" stroke="#93c5fd" stroke-width="1.5" fill="none"/>
+  <text transform="translate(276,234) rotate(90)" text-anchor="middle" font-size="10" fill="#3b82f6">gradient updates</text>
+
+  <!-- Arrow to head -->
+  <line x1="140" y1="307" x2="140" y2="352" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah-neutral)"/>
+  <text x="152" y="327" font-size="10" fill="#94a3b8">2048-dim</text>
+  <text x="152" y="340" font-size="10" fill="#94a3b8">features</text>
+
+  <!-- Linear Head -->
+  <rect x="65" y="355" width="150" height="40" rx="5" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+  <text x="140" y="380" text-anchor="middle" font-size="13" fill="#15803d">Linear Head</text>
+
+  <text x="140" y="410" text-anchor="middle" font-size="10" fill="#64748b">prototype init (Snell et al., 2017)</text>
+  <text x="140" y="425" text-anchor="middle" font-size="10" fill="#64748b">trained with gradient updates</text>
+</svg>
