@@ -3,8 +3,9 @@
 Reference: Tian et al. 2023, "Designing BERT for Convolutional Networks:
 Sparse and Hierarchical Masked Modeling" (ICLR 2023).
 
-Encoder: ResNet50 split into 4 stages; masked patches are zeroed before the
-first conv. Decoder: U-Net with skip connections, upsampling 7x7->224x224.
+Encoder: ResNet50 split into 4 stages; masked patches are zeroed at input
+(simplified from SparK's per-stage mask re-application). Decoder: hierarchical
+U-Net with skip connections from all four stages, upsampling 7x7 to 224x224.
 Loss: MSE on masked patches only, with optional per-patch normalization.
 At fine-tuning time the decoder is discarded; get_features() returns the
 2048-d global-average-pooled layer4 output (same interface as MoCo/Barlow).
